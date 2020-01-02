@@ -15,7 +15,6 @@ module decoder_sig(
     parameter [8:0] KEY_CODES_RIGHT = 9'b0_0111_0100; // E074
 	parameter [8:0] KEY_CODES_Z = 9'b0_0001_1010; // 1A
 	
-	reg [3:0] nums;
 	reg [3:0] nt_nums;
 		
 	always @ (posedge clk, posedge rst)
