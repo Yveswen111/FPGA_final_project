@@ -33,18 +33,60 @@ module decoder_sig(
 		if (been_ready)begin
 			if(key_down[last_change])begin
 				case(last_change)
-					KEY_CODES_UP:nt_nums[3] = 1'b1;
-					KEY_CODES_DOWN:nt_nums[2] = 1'b1;
-					KEY_CODES_LEFT:nt_nums[1] = 1'b1;
-					KEY_CODES_RIGHT:nt_nums[0] = 1'b1;
+					KEY_CODES_UP:begin 
+						nt_nums[3] = 1'b1;
+						nt_nums[2] = nums[2];
+						nt_nums[1] = nums[1];
+						nt_nums[0] = nums[0];
+					end
+					KEY_CODES_DOWN:begin 
+						nt_nums[3] = nums[3];
+						nt_nums[2] = 1'b1;
+						nt_nums[1] = nums[1];
+						nt_nums[0] = nums[0];
+					end
+					KEY_CODES_LEFT:begin 
+						nt_nums[3] = nums[3];
+						nt_nums[2] = nums[2];
+						nt_nums[1] = 1'b1;
+						nt_nums[0] = nums[0];
+					end
+					KEY_CODES_RIGHT:begin 
+						nt_nums[3] = nums[3];
+						nt_nums[2] = nums[2];
+						nt_nums[1] = nums[1];
+						nt_nums[0] = 1'b1;
+					end
+					default:nt_nums = nums;
 				endcase
 			end
 			else begin
 				case(last_change)
-					KEY_CODES_UP:nt_nums[3] = 1'b0;
-					KEY_CODES_DOWN:nt_nums[2] = 1'b0;
-					KEY_CODES_LEFT:nt_nums[1] = 1'b0;
-					KEY_CODES_RIGHT:nt_nums[0] = 1'b0;
+					KEY_CODES_UP:begin 
+						nt_nums[3] = 1'b0;
+						nt_nums[2] = nums[2];
+						nt_nums[1] = nums[1];
+						nt_nums[0] = nums[0];
+					end
+					KEY_CODES_DOWN:begin 
+						nt_nums[3] = nums[3];
+						nt_nums[2] = 1'b0;
+						nt_nums[1] = nums[1];
+						nt_nums[0] = nums[0];
+					end
+					KEY_CODES_LEFT:begin 
+						nt_nums[3] = nums[3];
+						nt_nums[2] = nums[2];
+						nt_nums[1] = 1'b0;
+						nt_nums[0] = nums[0];
+					end
+					KEY_CODES_RIGHT:begin 
+						nt_nums[3] = nums[3];
+						nt_nums[2] = nums[2];
+						nt_nums[1] = nums[1];
+						nt_nums[0] = 1'b0;
+					end
+					default:nt_nums = nums;
 				endcase
 			end
 		end
