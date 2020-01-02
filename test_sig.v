@@ -6,9 +6,9 @@ module test_sig(
 	input wire clk
 	);
 	
-	wire been_ready,
-	wire [8:0] last_change,
-	wire [511:0] key_down,
+	wire been_ready;
+	wire [8:0] last_change;
+	wire [511:0] key_down;
 	
 	KeyboardDecoder key_de (
 		.key_down(key_down),
