@@ -12,6 +12,7 @@ module top(
 
     wire clk_25MHz;
     wire clk_22;
+	wire clk_21;
     wire valid;
     wire [9:0] h_cnt; //640
     wire [9:0] v_cnt;  //480
@@ -49,7 +50,8 @@ module top(
      clock_divisor clk_wiz_0_inst(
       .clk(clk),
       .clk1(clk_25MHz),
-      .clk22(clk_22)
+      .clk22(clk_22),
+	  .clk21(clk_21)
     );
 	
 	reimu myp(
@@ -75,7 +77,7 @@ module top(
 	);
 	
 	reimu_bullet(
-		.clk_22(clk_22),
+		.clk_22(clk_21),
 		.rst(rst),
 		.reimu_bulletx(reimu_bulletx),
 		.reimu_bullety(reimu_bullety),

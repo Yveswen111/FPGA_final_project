@@ -86,7 +86,12 @@ always@(posedge clk_22)begin
 		end
 	
 		else
-			reimu_bullety <= reimu_bullety-10'd20;
+			if(reimu_bullety <= 10'd120)
+				reimu_bullety <= reimu_bullety-10'd1;
+			else if(reimu_bullety <= 10'd240)
+				reimu_bullety <= reimu_bullety-10'd4;
+			else
+				reimu_bullety <= reimu_bullety-10'd5;
 	end
 end
 
