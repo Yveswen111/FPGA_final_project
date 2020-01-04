@@ -1,5 +1,5 @@
 module reimu(rst,clk22,gameover,btnstate,reimux,reimuy);//自機
-    input rst;
+    	input rst;
 	input clk22;
 	input gameover;
 	input [3:0]btnstate;
@@ -33,17 +33,17 @@ module reimu(rst,clk22,gameover,btnstate,reimux,reimuy);//自機
 	begin
 		if(btnstate[3:2] == 2'b10)//up
 		begin
-			if(reimuy > 10'd0)
-			nt_reimuy = reimuy - 10'd1;
+			if(reimuy > 10'd25)
+			nt_reimuy = reimuy - 10'd5;
 			else
-			nt_reimuy = 10'd0;
+			nt_reimuy = 10'd25;
 		end
 		else if(btnstate[3:2] == 2'b01)//down
 		begin
-			if(reimuy < 10'd480)
-			nt_reimuy = reimuy + 10'd1;
+			if(reimuy < 10'd455)
+			nt_reimuy = reimuy + 10'd5;
 			else
-			nt_reimuy = 10'd480;
+			nt_reimuy = 10'd455;
 		end
 		else
 		begin
@@ -52,17 +52,17 @@ module reimu(rst,clk22,gameover,btnstate,reimux,reimuy);//自機
 		
 		if(btnstate[1:0] == 2'b10)//left
 		begin
-			if(reimux > 10'd0)
-			nt_reimux = reimux - 10'd1;
+			if(reimux > 10'd15)
+			nt_reimux = reimux - 10'd5;
 			else
 			nt_reimux = 10'd0;
 		end
 		else if(btnstate[1:0] == 2'b01)//right
 		begin
-			if(reimux < 10'd440)
-			nt_reimux = reimux + 10'd1;
+			if(reimux < 10'd425)
+			nt_reimux = reimux + 10'd5;
 			else
-			nt_reimux = 10'd440;
+			nt_reimux = 10'd425;
 		end
 		else
 		begin
