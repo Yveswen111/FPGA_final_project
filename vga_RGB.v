@@ -18,12 +18,15 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module vga_RGB(clk_25m, reimux, reimuy, reimuE, hc, vc, vgaRed, vgaGreen, vgaBlue, rst, valid);
+module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, boss, hc, vc, vgaRed, vgaGreen, vgaBlue, rst, valid);
 	input clk_25m, valid;
 	input [9:0]reimux;
 	input [9:0]reimuy; //position of player
 	input reimuE; //existence of player
 	input rst; //reset signal
+	input [9:0]bossx;
+	input [9:0]bossy; //position of boss
+	input boss; //existence of boss 
 	input [9:0]hc;
 	input [9:0]vc; //monitor coordinate
 	output reg [3:0]vgaRed;
@@ -31,17 +34,27 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, hc, vc, vgaRed, vgaGreen, vgaBlu
 	output reg [3:0]vgaBlue;
 
 	reg [16:0]adrbg;//background image
-	wire [9:0]Dbg;
+	wire [11:0]Dbg;
 	BgPic i1(clk_25m,adrbg,Dbg);
 	reg [16:0]adrmyp;//player image
-	wire [9:0]Dmyp;
+	wire [11:0]Dmyp;
 	ReimuPic i2(clk_25m,adrmyp,Dmyp);
+	reg [16:0]adrboss;//boss image
+	wire [11:0]Dboss;
+	BossPic i3(clk_25m, adrboss, Dboss);
 	
-	always@(*) begin//player position calculate. need change
-		if((hc<=reimux+15)&&(hc>reimux-15)&&(vc>=reimuy-25)&&(vc<reimuy+25)&&reimuE)
+	always@(*) begin//player position calculate.
+		if((hc<=reimux+15)&&(hc>reimux-15)&&(vc>=reimuy-25)&&(vc<reimuy+25))
 			adrmyp = hc+15-reimux+30*(vc+25-reimuy);
 		else
 			adrmyp = 17'd0;
+	end
+	
+	always@(*) begin//player position calculate.
+		if((hc<=bossx+25)&&(hc>bossx-25)&&(vc>=bossy-37)&&(vc<bossy+38)&&boss)
+			adrboss = hc+25-bossx+50*(vc+37-bossy);
+		else
+			adrboss = 17'd0;
 	end
 	
 	always@(*)begin
@@ -56,7 +69,9 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, hc, vc, vgaRed, vgaGreen, vgaBlu
 			vgaBlue[3:0]<=4'b0000;
 		end
 		else begin
-			if((Dmyp!=10'b00000000))//reimu pic
+			if((Dboss!=12'd0)&&boss)//boss pic
+				{vgaRed,vgaGreen,vgaBlue}<=Dboss;
+			else if((Dmyp!=10'b00000000)&&reimuE)//reimu pic
 				{vgaRed,vgaGreen,vgaBlue}<=Dmyp;
 			else
 				//background
