@@ -24,7 +24,7 @@ module reimu_bullet(
 	output reg [9:0]reimu_bulletx,
 	output reg [9:0]reimu_bullety,
 	input [9:0]reimux,
-	input [9:0]reimuy,
+	input [9:0]reimuy
 //	input [9:0]bossx,
 //	input [9:0]bossy,
 //	input [9:0]enmx1,
@@ -47,7 +47,7 @@ always@(posedge clk_22)begin
 		reimu_bulletx <= reimux;
 		reimu_bullety <= reimuy;
 	end
-	/*else begin
+	else begin/*
 		if(((mybx>=bossx-41)&&(mybx<=bossx+41)&&(myby<=bossy+24)))begin//打到BOSS
 			mybx<=planex;
 			myby<=planey;
@@ -79,14 +79,14 @@ always@(posedge clk_22)begin
 			if(enmhp4>0) enmhp4<=enmhp4-5'b00010;
 			else enmhp4<=0; 
 		end
-		*/
-		else if(reimu_bullety<=10'd0)begin //overheaven
+		
+		else*/ if(reimu_bullety<=10'd0)begin //overheaven
 			reimu_bulletx <= reimux;
 			reimu_bullety <= reimuy;
 		end
 	
 		else
-			reimu_bullety <= reimu_bullety-10'd1;
+			reimu_bullety <= reimu_bullety-10'd20;
 	end
 end
 

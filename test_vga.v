@@ -21,6 +21,7 @@ module top(
 	wire [3:0] input_sig;
 	wire [9:0] reimux,reimuy;
 	wire [9:0] bossx,bossy;
+	wire [9:0] reimu_bulletx,reimu_bullety;
 	wire shoot, reimuE,boss;
 	
 	assign reimuE = ~shoot;
@@ -72,6 +73,15 @@ module top(
 		.bossy(bossy),
 		.boss(boss)
 	);
+	
+	reimu_bullet(
+		.clk_22(clk_22),
+		.rst(rst),
+		.reimu_bulletx(reimu_bulletx),
+		.reimu_bullety(reimu_bullety),
+		.reimux(reimux),
+		.reimuy(reimuy)
+	);
 
 	vga_RGB rgb(
 		.clk_25m(clk_25MHz),
@@ -87,7 +97,9 @@ module top(
 		.reimuE(reimuE),
 		.bossx(bossx),
 		.bossy(bossy),
-		.boss(boss)
+		.boss(boss),
+		.reimu_bulletx(reimu_bulletx),
+		.reimu_bullety(reimu_bullety)
 	);
 
     vga_controller   vga_inst(

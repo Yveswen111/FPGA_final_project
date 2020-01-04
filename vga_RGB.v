@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, boss, hc, vc, vgaRed, vgaGreen, vgaBlue, rst, valid);
+module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, reimu_bulletx, reimu_bullety, boss, hc, vc, vgaRed, vgaGreen, vgaBlue, rst, valid);
 	input clk_25m, valid;
 	input [9:0]reimux;
 	input [9:0]reimuy; //position of player
@@ -26,6 +26,8 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, boss, hc, vc, vgaR
 	input rst; //reset signal
 	input [9:0]bossx;
 	input [9:0]bossy; //position of boss
+	input [9:0]reimu_bulletx;
+	input [9:0]reimu_bullety; //position of reimu_bullet
 	input boss; //existence of boss 
 	input [9:0]hc;
 	input [9:0]vc; //monitor coordinate
@@ -42,6 +44,9 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, boss, hc, vc, vgaR
 	reg [16:0]adrboss;//boss image
 	wire [11:0]Dboss;
 	BossPic i3(clk_25m, adrboss, Dboss);
+	reg [16:0]adrrb;//reimu bullet
+	wire [11:0]Drb;
+	RBulletPic i4(clk_25m, adrrb, Drb);
 	
 	always@(*) begin//player position calculate.
 		if((hc<=reimux+15)&&(hc>reimux-15)&&(vc>=reimuy-25)&&(vc<reimuy+25))
@@ -50,11 +55,18 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, boss, hc, vc, vgaR
 			adrmyp = 17'd0;
 	end
 	
-	always@(*) begin//player position calculate.
-		if((hc<=bossx+25)&&(hc>bossx-25)&&(vc>=bossy-37)&&(vc<bossy+38)&&boss)
+	always@(*) begin//boss position calculate.
+		if((hc<=bossx+25)&&(hc>bossx-25)&&(vc>=bossy-37)&&(vc<bossy+38))
 			adrboss = hc+25-bossx+50*(vc+37-bossy);
 		else
 			adrboss = 17'd0;
+	end
+	
+	always@(*) begin//reimu_bullet position calculate.
+		if((hc<=reimu_bulletx+8)&&(hc>reimu_bulletx-7)&&(vc>=reimu_bullety-7)&&(vc<reimu_bullety+8))
+			adrrb = hc+7-reimu_bulletx+15*(vc+7-reimu_bullety);
+		else
+			adrrb = 17'd0;
 	end
 	
 	always@(*)begin
@@ -71,8 +83,10 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, boss, hc, vc, vgaR
 		else begin
 			if((Dboss!=12'd0)&&boss)//boss pic
 				{vgaRed,vgaGreen,vgaBlue}<=Dboss;
-			else if((Dmyp!=10'b00000000)&&reimuE)//reimu pic
+			else if((Dmyp!=12'd0)&&reimuE)//reimu pic
 				{vgaRed,vgaGreen,vgaBlue}<=Dmyp;
+			else if(Drb!=12'd0)//reimu_bullet
+				{vgaRed,vgaGreen,vgaBlue}<=Drb;
 			else
 				//background
 				{vgaRed,vgaGreen,vgaBlue}<=Dbg;
