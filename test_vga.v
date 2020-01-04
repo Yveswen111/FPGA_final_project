@@ -40,7 +40,8 @@ module top(
 		.been_ready(been_ready),
 		.key_down(key_down),
 		.last_change(last_change),
-		.nums(input_sig)
+		.nums(input_sig),
+		.shoot(shoot)
 	);
 
      clock_divisor clk_wiz_0_inst(
@@ -55,8 +56,7 @@ module top(
 		.btnstate(input_sig),
 		.reimux(reimux),
 		.reimuy(reimuy),
-		.rst(rst),
-		.shoot(shoot)
+		.rst(rst)
 	);
 
 	vga_RGB rgb(
