@@ -1,13 +1,14 @@
-module reimu(clk22,gameover,btnstate,reimux,reimuy);//自機
+module reimu(rst,clk22,gameover,btnstate,reimux,reimuy);//自機
+    input rst;
 	input clk22;
 	input gameover;
-	input [3:0] btnstate;
+	input [3:0]btnstate;
 	/*
 	keyboard
-	up => 0000
-	down => 0001
+	up => 1000
+	down => 0100
 	left => 0010
-	right => 0011
+	right => 0001
 	*/
 	output reg [9:0] reimux;
 	output reg [9:0] reimuy;
@@ -16,10 +17,10 @@ module reimu(clk22,gameover,btnstate,reimux,reimuy);//自機
 
 	always@(posedge clk22)
 	begin
-		if(gameover)
+		if(rst || gameover)
 		begin
-			reimux <= 10'd0;
-			reimuy <= 10'd0;
+			reimux <= 10'd220;
+			reimuy <= 10'd360;
 		end
 		else
 		begin
@@ -28,59 +29,45 @@ module reimu(clk22,gameover,btnstate,reimux,reimuy);//自機
 		end
 	end
 	
-	always@(posedge clk22)
+	always@(*)
 	begin
-		case(btnstate)
-		4'b0000://up
+		if(btnstate[3:2] == 2'b10)//up
 		begin
 			if(reimuy > 10'd0)
-			begin
-				nt_reimuy = reimuy - 10'd1;
-			end
+			nt_reimuy = reimuy - 10'd1;
 			else
-			begin
-				nt_reimuy = 10'd0;
-			end
+			nt_reimuy = 10'd0;
 		end
-		4'b0001://down
+		else if(btnstate[3:2] == 2'b01)//down
 		begin
 			if(reimuy < 10'd480)
-			begin
-				nt_reimuy = reimuy + 10'd1;
-			end
+			nt_reimuy = reimuy + 10'd1;
 			else
-			begin
-				nt_reimuy = 10'd480;
-			end
+			nt_reimuy = 10'd480;
 		end
-		4'b0010://left
+		else
 		begin
-			if(reimux > 10'd0)
-			begin
-				nt_reimux = reimux - 10'd1;
-			end
-			else
-			begin
-				nt_reimux = 10'd0;
-			end
-		end
-		4'b0011://right
-		begin
-			if(reimux < 10'd440)
-			begin
-				nt_reimux = reimux + 10'd1;
-			end
-			else
-			begin
-				nt_reimux = 10'd440;
-			end
-		end
-		default:
-		begin
-			nt_reimux = reimux;
 			nt_reimuy = reimuy;
 		end
-		endcase
-    end
+		
+		if(btnstate[1:0] == 2'b10)//left
+		begin
+			if(reimux > 10'd0)
+			nt_reimux = reimux - 10'd1;
+			else
+			nt_reimux = 10'd0;
+		end
+		else if(btnstate[1:0] == 2'b01)//right
+		begin
+			if(reimux < 10'd440)
+			nt_reimux = reimux + 10'd1;
+			else
+			nt_reimux = 10'd440;
+		end
+		else
+		begin
+			nt_reimux = reimux;
+		end
+	end
 
 endmodule
