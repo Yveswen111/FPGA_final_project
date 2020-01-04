@@ -53,7 +53,7 @@ module enm(
 	begin
 		if(enmhp1 > 7'd80)
 		begin
-			if(nt_enmy1 < 10'd200)
+			if(enmy1 < 10'd200)
 			begin
 				nt_enmy1 = enmy1 + 10'd2;
 				nt_enmx1 = 10'd40;
@@ -66,7 +66,7 @@ module enm(
 		end
 		else if(7'd80 >= enmhp1 && enmhp1 > 7'd40)
 		begin
-			if(nt_enmx1 < 10'd140)
+			if(enmx1 < 10'd140)
 			begin
 				nt_enmx1 = enmx1 + 10'd1;
 				nt_enmy1 = enmy1;
@@ -79,7 +79,7 @@ module enm(
 		end
 		else if(7'd40 >= enmhp1 && enmhp1 > 7'd0)
 		begin
-			if(nt_enmy1 > 10'd20)
+			if(enmy1 > 10'd20)
 			begin
 				nt_enmy1 = enmy1 - 10'd2;
 				nt_enmx1 = enmx1;
@@ -101,20 +101,20 @@ module enm(
 	begin
 		if(enmhp2 > 7'd80)
 		begin
-			if(nt_enmy2 > 10'd20)
+			if(enmy2 > 10'd20)
 			begin
 				nt_enmy2 = enmy2 - 10'd2;
-				nt_enmx2 = 10'd80;
+				nt_enmx2 = 10'd140;
 			end
 			else
 			begin
 				nt_enmy2 = 10'd20;
-				nt_enmx2 = 10'd80;
+				nt_enmx2 = 10'd140;
 			end
 		end
 		else if(7'd80 >= enmhp2 && enmhp2 > 7'd40)
 		begin
-			if(nt_enmx2 > 10'd40)
+			if(enmx2 > 10'd40)
 			begin
 				nt_enmx2 = enmx2 - 10'd1;
 				nt_enmy2 = enmy2;
@@ -127,7 +127,7 @@ module enm(
 		end
 		else if(7'd40 >= enmhp2 && enmhp2 > 7'd0)
 		begin
-			if(nt_enmy2 > 10'd200)
+			if(enmy2 > 10'd200)
 			begin
 				nt_enmy2 = enmy2 + 10'd2;
 				nt_enmx2 = enmx2;
@@ -149,20 +149,20 @@ module enm(
 	begin
 		if(enmhp3 > 7'd80)
 		begin
-			if(nt_enmy3 < 10'd200)
+			if(enmy3 < 10'd200)
 			begin
 				nt_enmy3 = enmy3 + 10'd2;
-				nt_enmx3 = 10'd80;
+				nt_enmx3 = 10'd240;
 			end
 			else
 			begin
 				nt_enmy3 = 10'd200;
-				nt_enmx3 = 10'd80;
+				nt_enmx3 = 10'd240;
 			end
 		end
 		else if(7'd80 >= enmhp3 && enmhp3 > 7'd40)
 		begin
-			if(nt_enmx3 < 10'd340)
+			if(enmx3 < 10'd340)
 			begin
 				nt_enmx3 = enmx3 + 10'd1;
 				nt_enmy3 = enmy3;
@@ -175,7 +175,7 @@ module enm(
 		end
 		else if(7'd40 >= enmhp3 && enmhp3 > 7'd0)
 		begin
-			if(nt_enmy3 > 10'd20)
+			if(enmy3 > 10'd20)
 			begin
 				nt_enmy3 = enmy3 - 10'd2;
 				nt_enmx3 = enmx3;
@@ -197,20 +197,20 @@ module enm(
 	begin
 		if(enmhp4 > 7'd80)
 		begin
-			if(nt_enmy4 > 10'd20)
+			if(enmy4 > 10'd20)
 			begin
 				nt_enmy4 = enmy4 - 10'd2;
-				nt_enmx4 = 10'd40;
+				nt_enmx4 = 10'd340;
 			end
 			else
 			begin
 				nt_enmy4 = 10'd20;
-				nt_enmx4 = 10'd40;
+				nt_enmx4 = 10'd340;
 			end
 		end
 		else if(7'd80 >= enmhp4 && enmhp4 > 7'd40)
 		begin
-			if(nt_enmx4 > 10'd240)
+			if(enmx4 > 10'd240)
 			begin
 				nt_enmx4 = enmx4 - 10'd1;
 				nt_enmy4 = enmy4;
@@ -223,7 +223,7 @@ module enm(
 		end
 		else if(7'd40 >= enmhp4 && enmhp4 > 7'd0)
 		begin
-			if(nt_enmy4 < 10'd200)
+			if(enmy4 < 10'd200)
 			begin
 				nt_enmy4 = enmy4 + 10'd2;
 				nt_enmx4 = enmx4;
