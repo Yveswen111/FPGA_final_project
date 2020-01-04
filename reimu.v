@@ -33,17 +33,17 @@ module reimu(rst,clk22,gameover,btnstate,reimux,reimuy);//自機
 	begin
 		if(btnstate[3:2] == 2'b10)//up
 		begin
-			if(reimuy > 10'd25)
-			nt_reimuy = reimuy - 10'd10;
+			if(reimuy > 10'd10)
+			nt_reimuy = reimuy - 10'd7;
 			else
-			nt_reimuy = 10'd25;
+			nt_reimuy = 10'd10;
 		end
 		else if(btnstate[3:2] == 2'b01)//down
 		begin
-			if(reimuy < 10'd455)
-			nt_reimuy = reimuy + 10'd10;
+			if(reimuy < 10'd465)
+			nt_reimuy = reimuy + 10'd7;
 			else
-			nt_reimuy = 10'd455;
+			nt_reimuy = 10'd465;
 		end
 		else
 		begin
@@ -52,17 +52,17 @@ module reimu(rst,clk22,gameover,btnstate,reimux,reimuy);//自機
 		
 		if(btnstate[1:0] == 2'b10)//left
 		begin
-			if(reimux > 10'd20)
-			nt_reimux = reimux - 10'd10;
+			if(reimux > 10'd10)
+			nt_reimux = reimux - 10'd7;
 			else
-			nt_reimux = 10'd20;
+			nt_reimux = 10'd10;
 		end
 		else if(btnstate[1:0] == 2'b01)//right
 		begin
-			if(reimux < 10'd425)
-			nt_reimux = reimux + 10'd10;
+			if(reimux < 10'd430)
+			nt_reimux = reimux + 10'd7;
 			else
-			nt_reimux = 10'd425;
+			nt_reimux = 10'd430;
 		end
 		else
 		begin
