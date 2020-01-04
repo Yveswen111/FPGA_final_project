@@ -9,11 +9,11 @@ module decoder_sig(
 	
 	parameter [8:0] LEFT_SHIFT_CODES  = 9'b0_0001_0010;
 	parameter [8:0] RIGHT_SHIFT_CODES = 9'b0_0101_1001;
-	parameter [8:0] KEY_CODES_UP = 9'b0_0111_0101;	// E075
-	parameter [8:0] KEY_CODES_DOWN = 9'b0_0111_0010;	// E072
-    parameter [8:0] KEY_CODES_LEFT = 9'b0_0110_1011;	// E06B
-    parameter [8:0] KEY_CODES_RIGHT = 9'b0_0111_0100; // E074
-	parameter [8:0] KEY_CODES_Z = 9'b0_0001_1010; // 1A
+	parameter [8:0] KEY_CODES_UP = 9'b0_0001_1101;    // W => 1D
+	parameter [8:0] KEY_CODES_DOWN = 9'b0_0001_1011;  // S => 1B
+    	parameter [8:0] KEY_CODES_LEFT = 9'b0_0001_1100;  // A => 1C
+    	parameter [8:0] KEY_CODES_RIGHT = 9'b0_0010_0011; // D => 23
+	parameter [8:0] KEY_CODES_Z = 9'b0_0010_1001;     // space => 29
 	
 	reg [3:0] nt_nums;
 		
