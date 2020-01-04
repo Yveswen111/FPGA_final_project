@@ -18,10 +18,11 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module vga_RGB(clk_25m, reimux, reimuy, hc, vc, vgaRed, vgaGreen, vgaBlue, rst, valid);
+module vga_RGB(clk_25m, reimux, reimuy, reimuE, hc, vc, vgaRed, vgaGreen, vgaBlue, rst, valid);
 	input clk_25m, valid;
 	input [9:0]reimux;
 	input [9:0]reimuy; //position of player
+	input reimuE; //existence of player
 	input rst; //reset signal
 	input [9:0]hc;
 	input [9:0]vc; //monitor coordinate
@@ -37,10 +38,10 @@ module vga_RGB(clk_25m, reimux, reimuy, hc, vc, vgaRed, vgaGreen, vgaBlue, rst, 
 	ReimuPic i2(clk_25m,adrmyp,Dmyp);
 	
 	always@(*) begin//player position calculate. need change
-		if((hc<=reimux+15)&&(hc>reimux-15)&&(vc>=reimuy-25)&&(vc<reimuy+25))
+		if((hc<=reimux+15)&&(hc>reimux-15)&&(vc>=reimuy-25)&&(vc<reimuy+25)&&reimuE)
 			adrmyp = hc+15-reimux+30*(vc+25-reimuy);
 		else
-			adrmyp = 0;
+			adrmyp = 17'd0;
 	end
 	
 	always@(*)begin

@@ -20,6 +20,9 @@ module top(
 	wire [511:0] key_down;
 	wire [3:0] input_sig;
 	wire [9:0] reimux,reimuy;
+	wire shoot, reimuE;
+	
+	assign reimuE = ~shoot;
 	
 	KeyboardDecoder key_de (
 		.key_down(key_down),
@@ -52,7 +55,8 @@ module top(
 		.btnstate(input_sig),
 		.reimux(reimux),
 		.reimuy(reimuy),
-		.rst(rst)
+		.rst(rst),
+		.shoot(shoot)
 	);
 
 	vga_RGB rgb(
@@ -65,7 +69,8 @@ module top(
 		.vgaGreen(vgaGreen),
 		.vgaBlue(vgaBlue),
 		.rst(rst),
-		.valid(valid)
+		.valid(valid),
+		.reimuE(reimuE)
 	);
 
     vga_controller   vga_inst(
