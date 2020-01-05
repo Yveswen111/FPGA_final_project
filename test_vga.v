@@ -24,8 +24,8 @@ module top(
 	wire [9:0] bossx,bossy;
 	wire [9:0] reimu_bulletx,reimu_bullety;
 	wire shoot, reimuE,boss;
-	
-	assign reimuE = ~shoot;
+	wire reimu_bullet;
+	wire [9:0]bosshp;
 	
 	KeyboardDecoder key_de (
 		.key_down(key_down),
@@ -70,7 +70,7 @@ module top(
 		.enma2(0),
 		.enma3(0),
 		.enma4(0),
-		.bosshp(10'd450),
+		.bosshp(bosshp),
 		.bossx(bossx),
 		.bossy(bossy),
 		.boss(boss)
@@ -82,7 +82,12 @@ module top(
 		.reimu_bulletx(reimu_bulletx),
 		.reimu_bullety(reimu_bullety),
 		.reimux(reimux),
-		.reimuy(reimuy)
+		.reimuy(reimuy),
+		.shoot(shoot),
+		.reimu_bullet(reimu_bullet),
+		.bossx(bossx),
+		.bossy(bossy),
+		.bosshp(bosshp)
 	);
 
 	vga_RGB rgb(
@@ -96,12 +101,13 @@ module top(
 		.vgaBlue(vgaBlue),
 		.rst(rst),
 		.valid(valid),
-		.reimuE(reimuE),
+		.reimuE(1),
 		.bossx(bossx),
 		.bossy(bossy),
 		.boss(boss),
 		.reimu_bulletx(reimu_bulletx),
-		.reimu_bullety(reimu_bullety)
+		.reimu_bullety(reimu_bullety),
+		.reimu_bullet(reimu_bullet)
 	);
 
     vga_controller   vga_inst(

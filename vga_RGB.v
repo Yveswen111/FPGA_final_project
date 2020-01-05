@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, reimu_bulletx, reimu_bullety, boss, hc, vc, vgaRed, vgaGreen, vgaBlue, rst, valid);
+module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, reimu_bulletx, reimu_bullety, reimu_bullet, boss, hc, vc, vgaRed, vgaGreen, vgaBlue, rst, valid);
 	input clk_25m, valid;
 	input [9:0]reimux;
 	input [9:0]reimuy; //position of player
@@ -28,6 +28,7 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, reimu_bulletx, rei
 	input [9:0]bossy; //position of boss
 	input [9:0]reimu_bulletx;
 	input [9:0]reimu_bullety; //position of reimu_bullet
+	input reimu_bullet;//existence of reimu_bullet
 	input boss; //existence of boss 
 	input [9:0]hc;
 	input [9:0]vc; //monitor coordinate
@@ -85,7 +86,7 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, reimu_bulletx, rei
 				{vgaRed,vgaGreen,vgaBlue}<=Dboss;
 			else if((Dmyp!=12'd0)&&reimuE)//reimu pic
 				{vgaRed,vgaGreen,vgaBlue}<=Dmyp;
-			else if(Drb!=12'd0)//reimu_bullet
+			else if((Drb!=12'd0)&&reimu_bullet)//reimu_bullet
 				{vgaRed,vgaGreen,vgaBlue}<=Drb;
 			else
 				//background
