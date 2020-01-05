@@ -18,17 +18,17 @@ module boss(rst,clk22,enma1,enma2,enma3,enma4,bosshp,bossx,bossy,boss);
 	assign enma = enma1 | enma2 | enma3 | enma4;//if enma = 0 then boss comes
 
 	always@(posedge clk22)begin
-		if((!enma) && (!rst))
+		if(rst)
+		begin
+			boss <= 1'b0;
+			bossx <= 10'd0;
+			bossy <= 10'd75;
+		end
+		else
 		begin
 			boss <= nt_boss;
 			bossx <= nt_bossx;
 			bossy <= nt_bossy;
-		end
-		else
-		begin
-			boss <= 1'b1;
-			bossx <= 10'd0;
-			bossy <= 10'd75;
 		end
 	end
 
@@ -39,13 +39,11 @@ module boss(rst,clk22,enma1,enma2,enma3,enma4,bosshp,bossx,bossy,boss);
 			begin
 				if(bossx < 10'd400)
 				begin
-					nt_boss = 1'b1;
-					nt_bossx = bossx + 10'd5;
+					nt_bossx = bossx + 10'd1;
 					nt_bossy = 10'd75;
 				end
 				else
 				begin
-					nt_boss = 1'b1;
 					nt_bossx = 10'd400;
 					nt_bossy = 10'd75;
 				end
@@ -54,13 +52,11 @@ module boss(rst,clk22,enma1,enma2,enma3,enma4,bosshp,bossx,bossy,boss);
 			begin
 				if(bossy < 10'd150)
 				begin
-					nt_boss = 1'b1;
 					nt_bossy = bossy + 10'd1;
 					nt_bossx = bossx;
 				end
 				else
 				begin
-					nt_boss = 1'b1;
 					nt_bossy = 10'd150;
 					nt_bossx = bossx;
 				end
@@ -69,29 +65,36 @@ module boss(rst,clk22,enma1,enma2,enma3,enma4,bosshp,bossx,bossy,boss);
 			begin
 				if(bossx > 10'd50)
 				begin
-					nt_boss = 1'b1;
-					nt_bossx = bossx - 10'd5;
+					nt_bossx = bossx - 10'd1;
 					nt_bossy = bossy;
 				end
 				else
 				begin
-					nt_boss = 1'b1;
 					nt_bossx = 10'd50;
 					nt_bossy = bossy;
 				end
 			end
 			else
 			begin
-				nt_boss = 1'b0;
 				nt_bossx = 10'd0;
 				nt_bossy = 10'd0;
 			end
 		end
 		else
 		begin
-			nt_boss = boss;
 			nt_bossx = 10'd0;
 			nt_bossy = 10'd0;
+		end
+	end
+	
+	always@(*)begin
+		if(bosshp > 10'd0 && bosshp < 10'd451 && !enma)
+		begin
+			nt_boss = 1'b1;
+		end
+		else
+		begin
+			nt_boss = 1'b0;
 		end
 	end
 endmodule
