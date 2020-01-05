@@ -36,6 +36,32 @@ module top(
 	wire [9:0]enmx4;
 	wire [9:0]enmy4;
 	wire enm1, enm2, enm3, enm4;
+	wire shot; //get hurt
+	wire [9:0]bulletx1;//enemy1 => ｜
+	wire [9:0]bullety1;
+	wire [9:0]bulletx2;//enemy2 => ｜
+	wire [9:0]bullety2;
+	wire [9:0]bulletx3;//enemy3 => ｜
+	wire [9:0]bullety3;
+	wire [9:0]bulletx4;//enemy4 => ｜
+	wire [9:0]bullety4;
+	wire [9:0]bulletx5;//enemy1 => ／
+	wire [9:0]bullety5;
+	wire [9:0]bulletx6;//enemy2 => ／
+	wire [9:0]bullety6;
+	wire [9:0]bulletx7;//enemy3 => ／
+	wire [9:0]bullety7;
+	wire [9:0]bulletx8;//enemy4 => ／
+	wire [9:0]bullety8;
+	wire [9:0]bulletx9;//enemy1 => ＼
+	wire [9:0]bullety9;
+	wire [9:0]bulletx10;//enemy2 => ＼
+	wire [9:0]bullety10;
+	wire [9:0]bulletx11;//enemy3 => ＼
+	wire [9:0]bullety11;
+	wire [9:0]bulletx12;//enemy4 => ＼
+	wire [9:0]bullety12;
+	wire [1:0]life;
 	
 	KeyboardDecoder key_de (
 		.key_down(key_down),
@@ -83,6 +109,58 @@ module top(
 		.enmy3(enmy3),
 		.enmx4(enmx4),
 		.enmy4(enmy4)
+	);
+	
+	enm_bullet eb1 (
+		.rst (rst),
+		.clk22 (clk_22),
+		.reimux (reimux),
+		.reimuy (reimuy),
+		.enmx1 (enmx1),
+		.enmy1 (enmy1),
+		.enmx2 (enmx2),
+		.enmy2 (enmy2),
+		.enmx3 (enmx3),
+		.enmy3 (enmy3),
+		.enmx4 (enmx4),
+		.enmy4 (enmy4),
+		.enm1 (enm1),
+		.enm2 (enm2),
+		.enm3 (enm3),
+		.enm4 (enm4),
+		.shot (shot),
+		.bulletx1 (bulletx1),
+		.bullety1 (bullety1),
+		.bulletx2 (bulletx2),
+		.bullety2 (bullety2),
+		.bulletx3 (bulletx3),
+		.bullety3 (bullety3),
+		.bulletx4 (bulletx4),
+		.bullety4 (bullety4),
+		.bulletx5 (bulletx5),
+		.bullety5 (bullety5),
+		.bulletx6 (bulletx6),
+		.bullety6 (bullety6),
+		.bulletx7 (bulletx7),
+		.bullety7 (bullety7),
+		.bulletx8 (bulletx8),
+		.bullety8 (bullety8),
+		.bulletx9 (bulletx9),
+		.bullety9 (bullety9),
+		.bulletx10 (bulletx10),
+		.bullety10 (bullety10),
+		.bulletx11 (bulletx11),
+		.bullety11 (bullety11),
+		.bulletx12 (bulletx12),
+		.bullety12 (bullety12)
+	);
+	
+	reimu_life rl(
+		.clk_22(clk_22),
+		.shot(shot),
+		.rst(rst),
+		.life(life),
+		.reimuE(reimuE)
 	);
 	
 	reimu myp(
@@ -144,7 +222,7 @@ module top(
 		.vgaBlue(vgaBlue),
 		.rst(rst),
 		.valid(valid),
-		.reimuE(1),
+		.reimuE(reimuE),
 		.bossx(bossx),
 		.bossy(bossy),
 		.boss(boss),
@@ -162,7 +240,31 @@ module top(
 		.enmx3(enmx3),
 		.enmy3(enmy3),
 		.enmx4(enmx4),
-		.enmy4(enmy4)
+		.enmy4(enmy4),
+		.bulletx1 (bulletx1),
+		.bullety1 (bullety1),
+		.bulletx2 (bulletx2),
+		.bullety2 (bullety2),
+		.bulletx3 (bulletx3),
+		.bullety3 (bullety3),
+		.bulletx4 (bulletx4),
+		.bullety4 (bullety4),
+		.bulletx5 (bulletx5),
+		.bullety5 (bullety5),
+		.bulletx6 (bulletx6),
+		.bullety6 (bullety6),
+		.bulletx7 (bulletx7),
+		.bullety7 (bullety7),
+		.bulletx8 (bulletx8),
+		.bullety8 (bullety8),
+		.bulletx9 (bulletx9),
+		.bullety9 (bullety9),
+		.bulletx10 (bulletx10),
+		.bullety10 (bullety10),
+		.bulletx11 (bulletx11),
+		.bullety11 (bullety11),
+		.bulletx12 (bulletx12),
+		.bullety12 (bullety12)
 	);
 
     vga_controller   vga_inst(

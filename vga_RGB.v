@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, reimu_bulletx, reimu_bullety, reimu_bullet, boss, hc, vc, vgaRed, vgaGreen, vgaBlue, rst, valid, enmx1, enmy1, enmx2, enmy2, enmx3, enmy3, enmx4, enmy4, enm1, enm2, enm3, enm4);
+module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, reimu_bulletx, reimu_bullety, reimu_bullet, boss, hc, vc, vgaRed, vgaGreen, vgaBlue, rst, valid, enmx1, enmy1, enmx2, enmy2, enmx3, enmy3, enmx4, enmy4, enm1, enm2, enm3, enm4, bulletx1, bullety1, bulletx2, bullety2, bulletx3, bullety3, bulletx4, bullety4, bulletx5, bullety5, bulletx6, bullety6, bulletx7, bullety7, bulletx8, bullety8, bulletx9, bullety9, bulletx10, bullety10, bulletx11, bullety11, bulletx12, bullety12);
 	input clk_25m, valid;
 	input [9:0]reimux;
 	input [9:0]reimuy; //position of player
@@ -38,6 +38,30 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, reimu_bulletx, rei
 	input [9:0]enmx4;
 	input [9:0]enmy4;//position of enemy
 	input enm1, enm2, enm3, enm4;//existence of enemy
+	input [9:0]bulletx1;//enemy1 => ｜
+	input [9:0]bullety1;
+	input [9:0]bulletx2;//enemy2 => ｜
+	input [9:0]bullety2;
+	input [9:0]bulletx3;//enemy3 => ｜
+	input [9:0]bullety3;
+	input [9:0]bulletx4;//enemy4 => ｜
+	input [9:0]bullety4;
+	input [9:0]bulletx5;//enemy1 => ／
+	input [9:0]bullety5;
+	input [9:0]bulletx6;//enemy2 => ／
+	input [9:0]bullety6;
+	input [9:0]bulletx7;//enemy3 => ／
+	input [9:0]bullety7;
+	input [9:0]bulletx8;//enemy4 => ／
+	input [9:0]bullety8;
+	input [9:0]bulletx9;//enemy1 => ＼
+	input [9:0]bullety9;
+	input [9:0]bulletx10;//enemy2 => ＼
+	input [9:0]bullety10;
+	input [9:0]bulletx11;//enemy3 => ＼
+	input [9:0]bullety11;
+	input [9:0]bulletx12;//enemy4 => ＼
+	input [9:0]bullety12;
 	input boss; //existence of boss 
 	input [9:0]hc;
 	input [9:0]vc; //monitor coordinate
@@ -60,6 +84,9 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, reimu_bulletx, rei
 	reg [16:0]adrenm;//enemy pic
 	wire [11:0]Denm;
 	EnmPic i5(clk_25m, adrenm, Denm);
+	reg [16:0]adreb;//enemy_bullet pic
+	wire [11:0]Deb;
+	EBulletPic i6(clk_25m, adreb, Deb);
 	
 	always@(*) begin//player position calculate.
 		if((hc<=reimux+15)&&(hc>reimux-15)&&(vc>=reimuy-25)&&(vc<reimuy+25))
@@ -95,6 +122,35 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, reimu_bulletx, rei
 			adrenm = 17'd0;
 	end
 	
+	always@(*)begin//enemy_bullet position calculate
+		if((hc<=bulletx1+8)&&(hc>bulletx1-8)&&(vc>=bullety1-8)&&(vc<bullety1+8))
+			adreb = hc+8-bulletx1+17*(vc+8-bullety1);
+		else if((hc<=bulletx2+8)&&(hc>bulletx2-8)&&(vc>=bullety2-8)&&(vc<bullety2+8))
+			adreb = hc+8-bulletx2+17*(vc+8-bullety2);
+		else if((hc<=bulletx3+8)&&(hc>bulletx3-8)&&(vc>=bullety3-8)&&(vc<bullety3+8))
+			adreb = hc+8-bulletx3+17*(vc+8-bullety3);
+		else if((hc<=bulletx4+8)&&(hc>bulletx4-8)&&(vc>=bullety4-8)&&(vc<bullety4+8))
+			adreb = hc+8-bulletx4+17*(vc+8-bullety4);
+		else if((hc<=bulletx5+8)&&(hc>bulletx5-8)&&(vc>=bullety5-8)&&(vc<bullety5+8))
+			adreb = hc+8-bulletx5+17*(vc+8-bullety5);
+		else if((hc<=bulletx6+8)&&(hc>bulletx6-8)&&(vc>=bullety6-8)&&(vc<bullety6+8))
+			adreb = hc+8-bulletx6+17*(vc+8-bullety6);
+		else if((hc<=bulletx7+8)&&(hc>bulletx7-8)&&(vc>=bullety7-8)&&(vc<bullety7+8))
+			adreb = hc+8-bulletx7+17*(vc+8-bullety7);
+		else if((hc<=bulletx8+8)&&(hc>bulletx8-8)&&(vc>=bullety8-8)&&(vc<bullety8+8))
+			adreb = hc+8-bulletx8+17*(vc+8-bullety8);
+		else if((hc<=bulletx9+8)&&(hc>bulletx9-8)&&(vc>=bullety9-8)&&(vc<bullety9+8))
+			adreb = hc+8-bulletx9+17*(vc+8-bullety9);
+		else if((hc<=bulletx10+8)&&(hc>bulletx10-8)&&(vc>=bullety10-8)&&(vc<bullety10+8))
+			adreb = hc+8-bulletx10+17*(vc+8-bullety10);
+		else if((hc<=bulletx11+8)&&(hc>bulletx11-8)&&(vc>=bullety11-8)&&(vc<bullety11+8))
+			adreb = hc+8-bulletx11+17*(vc+8-bullety11);
+		else if((hc<=bulletx12+8)&&(hc>bulletx12-8)&&(vc>=bullety12-8)&&(vc<bullety12+8))
+			adreb = hc+8-bulletx12+17*(vc+8-bullety12);
+		else
+			adreb = 17'd0;
+	end
+	
 	always@(*)begin
 		adrbg = ((hc>>1)+320*(vc>>1))% 76800;
 	end
@@ -113,6 +169,8 @@ module vga_RGB(clk_25m, reimux, reimuy, reimuE, bossx, bossy, reimu_bulletx, rei
 				{vgaRed,vgaGreen,vgaBlue}<=Denm;
 			else if((Dmyp!=12'd0)&&reimuE)//reimu pic
 				{vgaRed,vgaGreen,vgaBlue}<=Dmyp;
+			else if(Deb!=12'd0)//enemy_bullet
+				{vgaRed,vgaGreen,vgaBlue}<=Deb;				
 			else if((Drb!=12'd0)&&reimu_bullet)//reimu_bullet
 				{vgaRed,vgaGreen,vgaBlue}<=Drb;
 			else
