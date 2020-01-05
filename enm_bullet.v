@@ -11,10 +11,10 @@ module enm_bullet(
 	input [9:0]enmy3,
 	input [9:0]enmx4,
 	input [9:0]enmy4,
-	input [6:0]enmhp1,
-	input [6:0]enmhp2,
-	input [6:0]enmhp3,
-	input [6:0]enmhp4,
+	input enm1,
+	input enm2,
+	input enm3,
+	input enm4,
 	output shot, //get hurt
 	output reg [9:0]bulletx1,//enemy1 => ｜
 	output reg [9:0]bullety1,
@@ -156,7 +156,7 @@ module enm_bullet(
 
 	always@(*)//enm1
 	begin
-		if(enmhp1 == 7'd0)
+		if(!enm1)
 		begin
 			nt_bulletx1 = 10'd0;
 			nt_bullety1 = 10'd0;
@@ -237,7 +237,7 @@ module enm_bullet(
 	
 	always@(*)//enm2
 	begin
-		if(enmhp2 == 7'd0)
+		if(!enm2)
 		begin
 			nt_bulletx2 = 10'd0;
 			nt_bullety2 = 10'd0;
@@ -319,7 +319,7 @@ module enm_bullet(
 	
 	always@(*)//enm3
 	begin
-		if(enmhp3 == 7'd0)
+		if(!enm3)
 		begin
 			nt_bulletx3 = 10'd0;
 			nt_bullety3 = 10'd0;
@@ -401,7 +401,7 @@ module enm_bullet(
 	
 	always@(*)//enm4
 	begin
-		if(enmhp4 == 7'd0)
+		if(!enm4)
 		begin
 			nt_bulletx4 = 10'd0;
 			nt_bullety4 = 10'd0;
