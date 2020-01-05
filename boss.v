@@ -1,10 +1,10 @@
-module boss(rst,clk22,enma1,enma2,enma3,enma4,bosshp,bossx,bossy,boss);
+module boss(rst,clk22,enm1,enm2,enm3,enm4,bosshp,bossx,bossy,boss);
 	input rst;
 	input clk22;
-	input enma1;
-	input enma2;
-	input enma3;
-	input enma4;
+	input enm1;
+	input enm2;
+	input enm3;
+	input enm4;
 	input [9:0] bosshp;
 	output reg [9:0] bossx;
 	output reg [9:0] bossy;
@@ -14,8 +14,8 @@ module boss(rst,clk22,enma1,enma2,enma3,enma4,bosshp,bossx,bossy,boss);
 	reg [9:0] nt_bossx;
 	reg [9:0] nt_bossy;
 
-	wire enma;
-	assign enma = enma1 | enma2 | enma3 | enma4;//if enma = 0 then boss comes
+	wire enm;
+	assign enm = enm1 | enm2 | enm3 | enm4;//if enm = 0 then boss comes
 
 	always@(posedge clk22)begin
 		if(rst)
@@ -88,7 +88,7 @@ module boss(rst,clk22,enma1,enma2,enma3,enma4,bosshp,bossx,bossy,boss);
 	end
 	
 	always@(*)begin
-		if(bosshp > 10'd0 && bosshp < 10'd451 && !enma)
+		if(bosshp > 10'd0 && bosshp < 10'd451 && !enm)
 		begin
 			nt_boss = 1'b1;
 		end
