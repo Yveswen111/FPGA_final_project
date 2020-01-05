@@ -39,7 +39,7 @@ module boss(rst,clk22,enma1,enma2,enma3,enma4,bosshp,bossx,bossy,boss);
 			begin
 				if(bossx < 10'd400)
 				begin
-					nt_bossx = bossx + 10'd1;
+					nt_bossx = bossx + 10'd3;
 					nt_bossy = 10'd75;
 				end
 				else
@@ -65,7 +65,7 @@ module boss(rst,clk22,enma1,enma2,enma3,enma4,bosshp,bossx,bossy,boss);
 			begin
 				if(bossx > 10'd50)
 				begin
-					nt_bossx = bossx - 10'd1;
+					nt_bossx = bossx - 10'd3;
 					nt_bossy = bossy;
 				end
 				else
