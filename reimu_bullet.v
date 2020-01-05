@@ -77,7 +77,7 @@ module reimu_bullet(
 				if(bosshp > 10'd0)
 					nt_bosshp = bosshp-10'd2;
 				else
-					bosshp = 10'd0;
+					nt_bosshp = 10'd0;
 
 				nt_reimu_bullet = 1'b0;
 				nt_reimu_bulletx = reimux;
