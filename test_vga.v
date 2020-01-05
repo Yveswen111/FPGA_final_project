@@ -26,6 +26,16 @@ module top(
 	wire shoot, reimuE,boss;
 	wire reimu_bullet;
 	wire [9:0]bosshp;
+	wire [6:0]enmhp1, enmhp2, enmhp3, enmhp4;
+	wire [9:0]enmx1;
+	wire [9:0]enmy1;
+	wire [9:0]enmx2;
+	wire [9:0]enmy2;
+	wire [9:0]enmx3;
+	wire [9:0]enmy3;
+	wire [9:0]enmx4;
+	wire [9:0]enmy4;
+	wire enm1, enm2, enm3, enm4;
 	
 	KeyboardDecoder key_de (
 		.key_down(key_down),
@@ -54,6 +64,27 @@ module top(
 	  .clk21(clk_21)
     );
 	
+	enm enemy(
+		.rst(rst),
+		.clk22(clk_22),
+		.enmhp1(enmhp1),
+		.enmhp2(enmhp2),
+		.enmhp3(enmhp3),
+		.enmhp4(enmhp4),
+		.enm1(enm1),
+		.enm2(enm2),
+		.enm3(enm3),
+		.enm4(enm4),
+		.enmx1(enmx1),
+		.enmy1(enmy1),
+		.enmx2(enmx2),
+		.enmy2(enmy2),
+		.enmx3(enmx3),
+		.enmy3(enmy3),
+		.enmx4(enmx4),
+		.enmy4(enmy4)
+	);
+	
 	reimu myp(
 		.clk22(clk_22),
 		.gameover(0),
@@ -66,10 +97,10 @@ module top(
 	boss flan(
 		.rst(rst),
 		.clk22(clk_22),
-		.enma1(0),
-		.enma2(0),
-		.enma3(0),
-		.enma4(0),
+		.enm1(enm1),
+		.enm2(enm2),
+		.enm3(enm3),
+		.enm4(enm4),
 		.bosshp(bosshp),
 		.bossx(bossx),
 		.bossy(bossy),
@@ -87,7 +118,19 @@ module top(
 		.reimu_bullet(reimu_bullet),
 		.bossx(bossx),
 		.bossy(bossy),
-		.bosshp(bosshp)
+		.bosshp(bosshp),
+		.enmhp1(enmhp1),
+		.enmhp2(enmhp2),
+		.enmhp3(enmhp3),
+		.enmhp4(enmhp4),
+		.enmx1(enmx1),
+		.enmy1(enmy1),
+		.enmx2(enmx2),
+		.enmy2(enmy2),
+		.enmx3(enmx3),
+		.enmy3(enmy3),
+		.enmx4(enmx4),
+		.enmy4(enmy4)
 	);
 
 	vga_RGB rgb(
@@ -107,7 +150,19 @@ module top(
 		.boss(boss),
 		.reimu_bulletx(reimu_bulletx),
 		.reimu_bullety(reimu_bullety),
-		.reimu_bullet(reimu_bullet)
+		.reimu_bullet(reimu_bullet),
+		.enm1(enm1),
+		.enm2(enm2),
+		.enm3(enm3),
+		.enm4(enm4),
+		.enmx1(enmx1),
+		.enmy1(enmy1),
+		.enmx2(enmx2),
+		.enmy2(enmy2),
+		.enmx3(enmx3),
+		.enmy3(enmy3),
+		.enmx4(enmx4),
+		.enmy4(enmy4)
 	);
 
     vga_controller   vga_inst(
