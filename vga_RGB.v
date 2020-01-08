@@ -147,7 +147,7 @@ module vga_RGB(input clk_25m, valid,
 	StarPic i10(clk_25m, adrst, Dst);
 	reg [16:0]adrnum0, adrnum1, adrnum2, adrnum3;//number select
 	reg [3:0]num;
-	wire adrnum;
+	wire [16:0]adrnum;
 	assign adrnum = adrnum0|adrnum1|adrnum2|adrnum3;
 	wire [11:0]Dnum;
 	NumSelect i11(clk_25m, adrnum, num, Dnum);
@@ -270,46 +270,78 @@ module vga_RGB(input clk_25m, valid,
 	always@(*)begin//score number position
 		case(scene)
 			2'b01:begin
-				if((hc<=10'd565)&&(hc>10'd541)&&(vc>=10'd166)&&(vc<10'd191))
+				if((hc<=10'd565)&&(hc>10'd541)&&(vc>=10'd166)&&(vc<10'd191))begin
 					adrnum1 = hc-541+25*(vc-166);
-				else
+					num = score1;
+				end
+				else begin
 					adrnum1 = 17'd0;
+					num = 4'd0;
+				end
 		
-				if((hc<=10'd540)&&(hc>10'd516)&&(vc>=10'd166)&&(vc<10'd191))
+				if((hc<=10'd540)&&(hc>10'd516)&&(vc>=10'd166)&&(vc<10'd191))begin
 					adrnum2 = hc-516+25*(vc-166);
-				else
+					num = score2;
+				end
+				else begin
 					adrnum2 = 17'd0;
+					num = 4'd0;
+				end
 			
-				if((hc<=10'd515)&&(hc>10'd491)&&(vc>=10'd166)&&(vc<10'd191))
+				if((hc<=10'd515)&&(hc>10'd491)&&(vc>=10'd166)&&(vc<10'd191))begin
 					adrnum3 = hc-491+25*(vc-166);
-				else
+					num = score3;
+				end
+				else begin
 					adrnum3 = 17'd0;
+					num = 4'd0;
+				end
 			
-				if((hc<=10'd590)&&(hc>10'd566)&&(vc>=10'd166)&&(vc<10'd191))
+				if((hc<=10'd590)&&(hc>10'd566)&&(vc>=10'd166)&&(vc<10'd191))begin
 					adrnum0 = hc-566+25*(vc-166);
-				else
+					num = score0;
+				end
+				else begin
 					adrnum0 = 17'd0;
+					num = 4'd0;
+				end
 			end
 			2'b10:begin
-				if((hc<=10'd345)&&(hc>10'd321)&&(vc>=10'd347)&&(vc<10'd372))
+				if((hc<=10'd345)&&(hc>10'd321)&&(vc>=10'd347)&&(vc<10'd372))begin
 					adrnum1 = hc-321+25*(vc-347);
-				else
+					num = score1;
+				end
+				else begin
 					adrnum1 = 17'd0;
+					num = 4'd0;
+				end
 		
-				if((hc<=10'd320)&&(hc>10'd296)&&(vc>=10'd347)&&(vc<10'd372))
+				if((hc<=10'd320)&&(hc>10'd296)&&(vc>=10'd347)&&(vc<10'd372))begin
 					adrnum2 = hc-296+25*(vc-347);
-				else
+					num = score2;
+				end
+				else begin
 					adrnum2 = 17'd0;
+					num = 4'd0;
+				end
 			
-				if((hc<=10'd295)&&(hc>10'd276)&&(vc>=10'd347)&&(vc<10'd372))
+				if((hc<=10'd295)&&(hc>10'd276)&&(vc>=10'd347)&&(vc<10'd372))begin
 					adrnum3 = hc-276+25*(vc-347);
-				else
+					num = score3;
+				end
+				else begin
 					adrnum3 = 17'd0;
+					num = 4'd0;
+				end
 			
-				if((hc<=10'd370)&&(hc>10'd346)&&(vc>=10'd347)&&(vc<10'd372))
+				if((hc<=10'd370)&&(hc>10'd346)&&(vc>=10'd347)&&(vc<10'd372))begin
 					adrnum0 = hc-346+25*(vc-347);
-				else
+					num = score0;
+				end
+				else begin
 					adrnum0 = 17'd0;
+					num = 4'd0;
+				end
 			end
 			default:begin
 				adrnum0 = 17'd0;

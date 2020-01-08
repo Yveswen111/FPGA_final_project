@@ -40,7 +40,7 @@ module scene_changer(
 				end
 				else begin
 					nt_scene = open;
-					nt_gamestart = 1'b0;
+					nt_gamestart = 1'b1;
 				end
 			end
 			game:begin

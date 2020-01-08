@@ -37,29 +37,29 @@ module top(
 	wire [9:0]enmy4;
 	wire enm1, enm2, enm3, enm4;
 	wire shot, shot1, shot2; //get hurt
-	wire [9:0]bulletx1;//enemy1 => ï½œ
+	wire [9:0]bulletx1;//enemy1 => ï½?
 	wire [9:0]bullety1;
-	wire [9:0]bulletx2;//enemy2 => ï½œ
+	wire [9:0]bulletx2;//enemy2 => ï½?
 	wire [9:0]bullety2;
-	wire [9:0]bulletx3;//enemy3 => ï½œ
+	wire [9:0]bulletx3;//enemy3 => ï½?
 	wire [9:0]bullety3;
-	wire [9:0]bulletx4;//enemy4 => ï½œ
+	wire [9:0]bulletx4;//enemy4 => ï½?
 	wire [9:0]bullety4;
-	wire [9:0]bulletx5;//enemy1 => ï¼
+	wire [9:0]bulletx5;//enemy1 => ï¼?
 	wire [9:0]bullety5;
-	wire [9:0]bulletx6;//enemy2 => ï¼
+	wire [9:0]bulletx6;//enemy2 => ï¼?
 	wire [9:0]bullety6;
-	wire [9:0]bulletx7;//enemy3 => ï¼
+	wire [9:0]bulletx7;//enemy3 => ï¼?
 	wire [9:0]bullety7;
-	wire [9:0]bulletx8;//enemy4 => ï¼
+	wire [9:0]bulletx8;//enemy4 => ï¼?
 	wire [9:0]bullety8;
-	wire [9:0]bulletx9;//enemy1 => ï¼¼
+	wire [9:0]bulletx9;//enemy1 => ï¼?
 	wire [9:0]bullety9;
-	wire [9:0]bulletx10;//enemy2 => ï¼¼
+	wire [9:0]bulletx10;//enemy2 => ï¼?
 	wire [9:0]bullety10;
-	wire [9:0]bulletx11;//enemy3 => ï¼¼
+	wire [9:0]bulletx11;//enemy3 => ï¼?
 	wire [9:0]bullety11;
-	wire [9:0]bulletx12;//enemy4 => ï¼¼
+	wire [9:0]bulletx12;//enemy4 => ï¼?
 	wire [9:0]bullety12;
 	wire [1:0]life;
 	wire bullet1;//bullet exist = 1
@@ -76,13 +76,13 @@ module top(
 	wire bullet12;
 	wire flandore_bigbullet;//boss big bullet
 	wire flandore_bullet1;
-	wire flandore_bullet2;//normal bullet like this => ï¼/|\ï¼¼
+	wire flandore_bullet2;//normal bullet like this => ï¼?/|\ï¼?
 	wire flandore_bullet3;
 	wire flandore_bullet4;
 	wire flandore_bullet5;
 	wire [9:0]flandore_bigbulletx;//boss big bullet
 	wire [9:0]flandore_bigbullety;
-	wire [9:0]flandore_bulletx1;//normal bullet like this => ï¼/|\ï¼¼
+	wire [9:0]flandore_bulletx1;//normal bullet like this => ï¼?/|\ï¼?
 	wire [9:0]flandore_bullety1;
 	wire [9:0]flandore_bulletx2;
 	wire [9:0]flandore_bullety2;
@@ -314,10 +314,16 @@ module top(
 		.gamestart(gamestart)
 	);
 	
+	OnePulse op1(
+		.signal_single_pulse(shot_reimu),
+		.signal(shot),
+		.clock(clk_21)
+	);
+	
 	score sc1 (
 		.rst (rst),
 		.clk22 (clk_21),
-		.shot_reimu (shot_reimu_de),
+		.shot_reimu (shot_reimu),
 		.shot_enm (shot_enm),
 		.shot_boss (shot_boss),
 		.enmhp1 (enmhp1),
