@@ -36,7 +36,7 @@ module top(
 	wire [9:0]enmx4;
 	wire [9:0]enmy4;
 	wire enm1, enm2, enm3, enm4;
-	wire shot; //get hurt
+	wire shot, shot1, shot2; //get hurt
 	wire [9:0]bulletx1;//enemy1 => ｜
 	wire [9:0]bullety1;
 	wire [9:0]bulletx2;//enemy2 => ｜
@@ -62,6 +62,38 @@ module top(
 	wire [9:0]bulletx12;//enemy4 => ＼
 	wire [9:0]bullety12;
 	wire [1:0]life;
+	wire bullet1;//bullet exist = 1
+	wire bullet2;
+	wire bullet3;
+	wire bullet4;
+	wire bullet5;
+	wire bullet6;
+	wire bullet7;
+	wire bullet8;
+	wire bullet9;
+	wire bullet10;
+	wire bullet11;
+	wire bullet12;
+	wire flandore_bigbullet;//boss big bullet
+	wire flandore_bullet1;
+	wire flandore_bullet2;//normal bullet like this => ／/|\＼
+	wire flandore_bullet3;
+	wire flandore_bullet4;
+	wire flandore_bullet5;
+	wire [9:0]flandore_bigbulletx;//boss big bullet
+	wire [9:0]flandore_bigbullety;
+	wire [9:0]flandore_bulletx1;//normal bullet like this => ／/|\＼
+	wire [9:0]flandore_bullety1;
+	wire [9:0]flandore_bulletx2;
+	wire [9:0]flandore_bullety2;
+	wire [9:0]flandore_bulletx3;
+	wire [9:0]flandore_bullety3;
+	wire [9:0]flandore_bulletx4;
+	wire [9:0]flandore_bullety4;
+	wire [9:0]flandore_bulletx5;
+	wire [9:0]flandore_bullety5;
+	
+	assign shot = shot1|shot2;
 	
 	KeyboardDecoder key_de (
 		.key_down(key_down),
@@ -128,7 +160,7 @@ module top(
 		.enm2 (enm2),
 		.enm3 (enm3),
 		.enm4 (enm4),
-		.shot (shot),
+		.shot (shot1),
 		.bulletx1 (bulletx1),
 		.bullety1 (bullety1),
 		.bulletx2 (bulletx2),
@@ -152,7 +184,19 @@ module top(
 		.bulletx11 (bulletx11),
 		.bullety11 (bullety11),
 		.bulletx12 (bulletx12),
-		.bullety12 (bullety12)
+		.bullety12 (bullety12),
+		.bullet1 (bullet1),
+		.bullet2 (bullet2),
+		.bullet3 (bullet3),
+		.bullet4 (bullet4),
+		.bullet5 (bullet5),
+		.bullet6 (bullet6),
+		.bullet7 (bullet7),
+		.bullet8 (bullet8),
+		.bullet9 (bullet9),
+		.bullet10 (bullet10),
+		.bullet11 (bullet11),
+		.bullet12 (bullet12)
 	);
 	
 	reimu_life rl(
@@ -185,7 +229,7 @@ module top(
 		.boss(boss)
 	);
 	
-	reimu_bullet(
+	reimu_bullet rb(
 		.clk_22(clk_21),
 		.rst(rst),
 		.reimu_bulletx(reimu_bulletx),
@@ -208,7 +252,37 @@ module top(
 		.enmx3(enmx3),
 		.enmy3(enmy3),
 		.enmx4(enmx4),
-		.enmy4(enmy4)
+		.enmy4(enmy4),
+		.reimuE(reimuE)
+	);
+	
+	boss_bullet bb1 (
+		.rst (rst),
+		.clk22 (clk_22),
+		.reimux (reimux),
+		.reimuy (reimuy),
+		.bossx (bossx),
+		.bossy (bossy),
+		.boss (boss),
+		.shot (shot2),
+		.flandore_bigbullet (flandore_bigbullet),
+		.flandore_bullet1 (flandore_bullet1),
+		.flandore_bullet2 (flandore_bullet2),
+		.flandore_bullet3 (flandore_bullet3),
+		.flandore_bullet4 (flandore_bullet4),
+		.flandore_bullet5 (flandore_bullet5),
+		.flandore_bigbulletx (flandore_bigbulletx),
+		.flandore_bigbullety (flandore_bigbullety),
+		.flandore_bulletx1 (flandore_bulletx1),
+		.flandore_bullety1 (flandore_bullety1),
+		.flandore_bulletx2 (flandore_bulletx2),
+		.flandore_bullety2 (flandore_bullety2),
+		.flandore_bulletx3 (flandore_bulletx3),
+		.flandore_bullety3 (flandore_bullety3),
+		.flandore_bulletx4 (flandore_bulletx4),
+		.flandore_bullety4 (flandore_bullety4),
+		.flandore_bulletx5 (flandore_bulletx5),
+		.flandore_bullety5 (flandore_bullety5)
 	);
 
 	vga_RGB rgb(
@@ -264,7 +338,38 @@ module top(
 		.bulletx11 (bulletx11),
 		.bullety11 (bullety11),
 		.bulletx12 (bulletx12),
-		.bullety12 (bullety12)
+		.bullety12 (bullety12),
+		.bullet1 (bullet1),
+		.bullet2 (bullet2),
+		.bullet3 (bullet3),
+		.bullet4 (bullet4),
+		.bullet5 (bullet5),
+		.bullet6 (bullet6),
+		.bullet7 (bullet7),
+		.bullet8 (bullet8),
+		.bullet9 (bullet9),
+		.bullet10 (bullet10),
+		.bullet11 (bullet11),
+		.bullet12 (bullet12),
+		.flandore_bigbullet (flandore_bigbullet),
+		.flandore_bullet1 (flandore_bullet1),
+		.flandore_bullet2 (flandore_bullet2),
+		.flandore_bullet3 (flandore_bullet3),
+		.flandore_bullet4 (flandore_bullet4),
+		.flandore_bullet5 (flandore_bullet5),
+		.flandore_bigbulletx (flandore_bigbulletx),
+		.flandore_bigbullety (flandore_bigbullety),
+		.flandore_bulletx1 (flandore_bulletx1),
+		.flandore_bullety1 (flandore_bullety1),
+		.flandore_bulletx2 (flandore_bulletx2),
+		.flandore_bullety2 (flandore_bullety2),
+		.flandore_bulletx3 (flandore_bulletx3),
+		.flandore_bullety3 (flandore_bullety3),
+		.flandore_bulletx4 (flandore_bulletx4),
+		.flandore_bullety4 (flandore_bullety4),
+		.flandore_bulletx5 (flandore_bulletx5),
+		.flandore_bullety5 (flandore_bullety5),
+		.life(life)
 	);
 
     vga_controller   vga_inst(

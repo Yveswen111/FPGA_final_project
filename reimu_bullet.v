@@ -25,6 +25,7 @@ module reimu_bullet(
 	output reg [9:0]reimu_bulletx,
 	output reg [9:0]reimu_bullety,
 	output reg reimu_bullet,
+	input reimuE,
 	input [9:0]reimux,
 	input [9:0]reimuy,
 	input [9:0]bossx,
@@ -78,7 +79,7 @@ module reimu_bullet(
 	end
 	
 	always@(*)begin
-		if(shoot) begin
+		if(shoot&&reimuE) begin
 			if((reimu_bulletx >= bossx-25)&&(reimu_bulletx <= bossx+25)&&(reimu_bullety <= bossy+38)&&(reimu_bullety >= bossy-37))begin //hit boss
 				if(bosshp > 10'd0)
 					nt_bosshp = bosshp-10'd1;
