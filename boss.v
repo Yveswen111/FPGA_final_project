@@ -38,40 +38,40 @@ module boss(rst,clk22,enm1,enm2,enm3,enm4,bosshp,bossx,bossy,boss,gamestart);
 		begin
 		if(bosshp > 10'd300)
 			begin
-				if(bossx < 10'd400)
+				if(bossx < 10'd220)
 				begin
-					nt_bossx = bossx + 10'd3;
+					nt_bossx = bossx + 10'd1;
 					nt_bossy = 10'd75;
 				end
 				else
 				begin
-					nt_bossx = 10'd400;
+					nt_bossx = 10'd220;
 					nt_bossy = 10'd75;
 				end
 			end
 			else if(bosshp <= 10'd300 && bosshp > 10'd150)
 			begin
-				if(bossy < 10'd150)
+				if(bossy < 10'd240)
 				begin
 					nt_bossy = bossy + 10'd1;
 					nt_bossx = bossx;
 				end
 				else
 				begin
-					nt_bossy = 10'd150;
+					nt_bossy = 10'd240;
 					nt_bossx = bossx;
 				end
 			end
 			else if(bosshp <= 10'd150 && bosshp > 10'd0)
 			begin
-				if(bossx > 10'd50)
+				if(bossx < 10'd440)
 				begin
-					nt_bossx = bossx - 10'd3;
+					nt_bossx = bossx + 10'd1;
 					nt_bossy = bossy;
 				end
 				else
 				begin
-					nt_bossx = 10'd50;
+					nt_bossx = 10'd440;
 					nt_bossy = bossy;
 				end
 			end
