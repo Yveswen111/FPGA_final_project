@@ -37,29 +37,29 @@ module vga_RGB(input clk_25m, valid,
 	input [9:0]enmx4,
 	input [9:0]enmy4,//position of enemy
 	input enm1, enm2, enm3, enm4,//existence of enemy
-	input [9:0]bulletx1,//enemy1 => ï½œ
+	input [9:0]bulletx1,//enemy1 => ï½?
 	input [9:0]bullety1,
-	input [9:0]bulletx2,//enemy2 => ï½œ
+	input [9:0]bulletx2,//enemy2 => ï½?
 	input [9:0]bullety2,
-	input [9:0]bulletx3,//enemy3 => ï½œ
+	input [9:0]bulletx3,//enemy3 => ï½?
 	input [9:0]bullety3,
-	input [9:0]bulletx4,//enemy4 => ï½œ
+	input [9:0]bulletx4,//enemy4 => ï½?
 	input [9:0]bullety4,
-	input [9:0]bulletx5,//enemy1 => ï¼
+	input [9:0]bulletx5,//enemy1 => ï¼?
 	input [9:0]bullety5,
-	input [9:0]bulletx6,//enemy2 => ï¼
+	input [9:0]bulletx6,//enemy2 => ï¼?
 	input [9:0]bullety6,
-	input [9:0]bulletx7,//enemy3 => ï¼
+	input [9:0]bulletx7,//enemy3 => ï¼?
 	input [9:0]bullety7,
-	input [9:0]bulletx8,//enemy4 => ï¼
+	input [9:0]bulletx8,//enemy4 => ï¼?
 	input [9:0]bullety8,
-	input [9:0]bulletx9,//enemy1 => ï¼¼
+	input [9:0]bulletx9,//enemy1 => ï¼?
 	input [9:0]bullety9,
-	input [9:0]bulletx10,//enemy2 => ï¼¼
+	input [9:0]bulletx10,//enemy2 => ï¼?
 	input [9:0]bullety10,
-	input [9:0]bulletx11,//enemy3 => ï¼¼
+	input [9:0]bulletx11,//enemy3 => ï¼?
 	input [9:0]bullety11,
-	input [9:0]bulletx12,//enemy4 => ï¼¼
+	input [9:0]bulletx12,//enemy4 => ï¼?
 	input [9:0]bullety12,
 	input bullet1,//bullet exist = 1
 	input bullet2,
@@ -87,7 +87,7 @@ module vga_RGB(input clk_25m, valid,
 	input flandore_bullet5,
 	input [9:0]flandore_bigbulletx,//boss big bullet
 	input [9:0]flandore_bigbullety,
-	input [9:0]flandore_bulletx1,//normal bullet like this => ï¼/|\ï¼¼
+	input [9:0]flandore_bulletx1,//normal bullet like this => ï¼?/|\ï¼?
 	input [9:0]flandore_bullety1,
 	input [9:0]flandore_bulletx2,
 	input [9:0]flandore_bullety2,
@@ -104,8 +104,7 @@ module vga_RGB(input clk_25m, valid,
 	
 	reg [11:0]char;
 	reg [11:0]bullet;
-	reg [11:0]background;
-	wire [11:0]life_dis, score_dis;
+	wire [11:0]life_dis, score_dis, title_dis, lose_dis;
 	
 	wire [2:0]red_star_E;
 	
@@ -113,9 +112,6 @@ module vga_RGB(input clk_25m, valid,
 	assign red_star_E[1] = (life[1]&life[0])|(life[1]&(~life[0]));//middle
 	assign red_star_E[0] = life[1]|life[0];//left
 
-	reg [16:0]adrbg;//background image
-	wire [11:0]Dbg;
-	BgPic i1(clk_25m,adrbg,Dbg);
 	reg [16:0]adrmyp;//player image
 	wire [11:0]Dmyp;
 	ReimuPic i2(clk_25m,adrmyp,Dmyp);
@@ -154,9 +150,26 @@ module vga_RGB(input clk_25m, valid,
 	reg [16:0]adrsco;//score word
 	wire [11:0]Dsco;
 	ScoPic i12(clk_25m, adrsco, Dsco);
+	reg [16:0]adrti1;//title1
+	wire [11:0]Dti1;
+	Ti1Pic i13(clk_25m, adrti1, Dti1);
+	reg [16:0]adrti2;//title2
+	wire [11:0]Dti2;
+	Ti2Pic i14(clk_25m, adrti2, Dti2);
+	reg [16:0]adren1;//end1
+	wire [11:0]Den1;
+	En1Pic i16(clk_25m, adren1, Den1);
+	reg [16:0]adren2;//end2
+	wire [11:0]Den2;
+	En2Pic i17(clk_25m, adren2, Den2);
+	reg [16:0]adrwin;//win
+	wire [11:0]Dwin;
+	WinPic i18(clk_25m, adrwin, Dwin);
 	
 	assign life_dis = Dst|Dino;
 	assign score_dis = Dsco|Dnum;
+	assign title_dis = Dti1|Dti2;
+	assign lose_dis = Den1|Den2;
 	
 	always@(*) begin//player position calculate.
 		if((hc<=reimux+15)&&(hc>reimux-15)&&(vc>=reimuy-25)&&(vc<reimuy+25))
@@ -276,7 +289,7 @@ module vga_RGB(input clk_25m, valid,
 				end
 				else begin
 					adrnum1 = 17'd0;
-					num = 4'd0;
+					num = num;
 				end
 		
 				if((hc<=10'd540)&&(hc>10'd516)&&(vc>=10'd166)&&(vc<10'd191))begin
@@ -285,7 +298,7 @@ module vga_RGB(input clk_25m, valid,
 				end
 				else begin
 					adrnum2 = 17'd0;
-					num = 4'd0;
+					num = num;
 				end
 			
 				if((hc<=10'd515)&&(hc>10'd491)&&(vc>=10'd166)&&(vc<10'd191))begin
@@ -294,7 +307,7 @@ module vga_RGB(input clk_25m, valid,
 				end
 				else begin
 					adrnum3 = 17'd0;
-					num = 4'd0;
+					num = num;
 				end
 			
 				if((hc<=10'd590)&&(hc>10'd566)&&(vc>=10'd166)&&(vc<10'd191))begin
@@ -303,7 +316,7 @@ module vga_RGB(input clk_25m, valid,
 				end
 				else begin
 					adrnum0 = 17'd0;
-					num = 4'd0;
+					num = num;
 				end
 			end
 			2'b10:begin
@@ -313,7 +326,7 @@ module vga_RGB(input clk_25m, valid,
 				end
 				else begin
 					adrnum1 = 17'd0;
-					num = 4'd0;
+					num = num;
 				end
 		
 				if((hc<=10'd320)&&(hc>10'd296)&&(vc>=10'd347)&&(vc<10'd372))begin
@@ -322,7 +335,7 @@ module vga_RGB(input clk_25m, valid,
 				end
 				else begin
 					adrnum2 = 17'd0;
-					num = 4'd0;
+					num = num;
 				end
 			
 				if((hc<=10'd295)&&(hc>10'd276)&&(vc>=10'd347)&&(vc<10'd372))begin
@@ -331,7 +344,7 @@ module vga_RGB(input clk_25m, valid,
 				end
 				else begin
 					adrnum3 = 17'd0;
-					num = 4'd0;
+					num = num;
 				end
 			
 				if((hc<=10'd370)&&(hc>10'd346)&&(vc>=10'd347)&&(vc<10'd372))begin
@@ -340,7 +353,7 @@ module vga_RGB(input clk_25m, valid,
 				end
 				else begin
 					adrnum0 = 17'd0;
-					num = 4'd0;
+					num = num;
 				end
 			end
 			default:begin
@@ -370,8 +383,35 @@ module vga_RGB(input clk_25m, valid,
 		endcase	
 	end
 	
-	always@(*)begin
-		adrbg = ((hc>>1)+320*(vc>>1))% 76800;
+	always@(*)begin//title position
+		if((hc<=10'd640)&&(hc>10'd0)&&(vc>=10'd0)&&(vc<10'd134))
+			adrti1 = (hc>>1)+320*(vc>>1);
+		else
+			adrti1 = 17'd0;
+			
+		if((hc<=10'd160)&&(hc>10'd0)&&(vc>=10'd398)&&(vc<10'd480))
+			adrti2 = hc+160*(vc-398);
+		else
+			adrti2 = 17'd0;
+	end
+	
+	always@(*)begin//lose position
+		if((hc<=10'd640)&&(hc>10'd286)&&(vc>=10'd194)&&(vc<10'd480))
+			adren1 = ((hc-286)>>1)+177*((vc-194)>>1);
+		else
+			adren1 = 17'd0;
+			
+		if((hc<=10'd150)&&(hc>10'd50)&&(vc>=10'd140)&&(vc<10'd340))
+			adren2 = ((hc-50)>>1)+50*((vc-140)>>1);
+		else
+			adren2 = 17'd0;
+	end
+	
+	always@(*)begin//win position
+		if((hc<=10'd465)&&(hc>10'd175)&&(vc>=10'd205)&&(vc<10'd275))
+			adrwin = ((hc-175)>>1)+145*((vc-205)>>1);
+		else
+			adrwin = 17'd0;
 	end
 	
 	//----------------choosing pixel
@@ -382,7 +422,6 @@ module vga_RGB(input clk_25m, valid,
 			vgaBlue[3:0]<=4'b0000;
 			char <= 12'd0;
 			bullet <= 12'd0;
-			background <= 12'd0;
 		end
 		else begin
 			if((Denm!=12'd0)||((Dboss!=12'd0)&&boss))//enemy pic and boss pic
@@ -404,15 +443,15 @@ module vga_RGB(input clk_25m, valid,
 				bullet<=12'd0;
 			
 			case(scene)
-				2'b00:background <= 12'd255;
-				2'b01:background <= Dbg;
-				2'b10:background <= 12'd76800;
-				2'b11:background <= 12'd630;
-				default:background <= 12'd0;
-			endcase
-			
-			case(scene)
-				2'b00:{vgaRed,vgaGreen,vgaBlue}<=background;
+				2'b00:begin
+					if(title_dis!=12'd0)
+						{vgaRed,vgaGreen,vgaBlue}<=title_dis;
+					else begin
+						vgaRed = 4'd13;
+						vgaGreen = 4'd12;
+						vgaBlue = 4'd9;
+					end
+				end
 				2'b01:begin
 					if(char!=12'd0)
 						{vgaRed,vgaGreen,vgaBlue}<=char;
@@ -420,16 +459,26 @@ module vga_RGB(input clk_25m, valid,
 						{vgaRed,vgaGreen,vgaBlue}<=bullet;
 					else if(life_dis!=12'd0||score_dis!=12'd0)
 						{vgaRed,vgaGreen,vgaBlue}<=life_dis|score_dis;
-					else//background
-						{vgaRed,vgaGreen,vgaBlue}<=background;
+					else begin//background
+						if(hc <= 10'd440)
+							{vgaRed,vgaGreen,vgaBlue}<=12'd0;
+						else
+							{vgaRed,vgaGreen,vgaBlue}<=12'h112;
+					end
 				end
 				2'b10:begin
-					if(score_dis!=12'd0)
-						{vgaRed,vgaGreen,vgaBlue}<=score_dis;
+					if(score_dis!=12'd0||Dwin!=12'd0)
+						{vgaRed,vgaGreen,vgaBlue}<=score_dis|Dwin;
 					else
-						{vgaRed,vgaGreen,vgaBlue}<=background;
+						{vgaRed,vgaGreen,vgaBlue}<=12'h97A;
 				end
-				2'b11:{vgaRed,vgaGreen,vgaBlue}<=background;
+				2'b11:begin
+					if(lose_dis!=12'd0)
+						{vgaRed,vgaGreen,vgaBlue}<=lose_dis;
+					else	
+						{vgaRed,vgaGreen,vgaBlue}<=12'h008;
+					
+				end
 				default:{vgaRed,vgaGreen,vgaBlue} <= 12'd0;
 			endcase
 			
