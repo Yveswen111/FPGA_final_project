@@ -15,7 +15,7 @@ module boss_bullet(
 	output reg flandore_bullet5,
 	output reg [9:0]flandore_bigbulletx,//boss big bullet
 	output reg [9:0]flandore_bigbullety,
-	output reg [9:0]flandore_bulletx1,//normal bullet like this => °˛/|\¢@
+	output reg [9:0]flandore_bulletx1,//normal bullet like this => Ôºè/|\Ôºº
 	output reg [9:0]flandore_bullety1,
 	output reg [9:0]flandore_bulletx2,
 	output reg [9:0]flandore_bullety2,
@@ -149,6 +149,10 @@ module boss_bullet(
 		begin
 			nt_reverse3 = 1'b1;
 		end
+		else if(flandore_bullety3 < 10'd30)
+		begin
+			nt_reverse3 = 1'b0;
+		end
 		else
 		begin
 			nt_reverse3 = reverse3;
@@ -185,18 +189,6 @@ module boss_bullet(
 	begin
 		if(!boss)
 		begin
-			nt_shot1 = 1'b0;
-			nt_shot2 = 1'b0;
-			nt_shot3 = 1'b0;
-			nt_shot4 = 1'b0;
-			nt_shot5 = 1'b0;
-			nt_shot6 = 1'b0;
-			nt_flandore_bigbullet = 1'b0;
-			nt_flandore_bullet1 = 1'b0;
-			nt_flandore_bullet2 = 1'b0;
-			nt_flandore_bullet3 = 1'b0;
-			nt_flandore_bullet4 = 1'b0;
-			nt_flandore_bullet5 = 1'b0;
 			nt_flandore_bigbulletx = 10'd0;
 			nt_flandore_bigbullety = 10'd0;
 			nt_flandore_bulletx1 = 10'd0;
@@ -213,7 +205,7 @@ module boss_bullet(
 		end
 		else
 		begin
-			if(flandore_bulletx1 > (reimux - 10'd10) && flandore_bulletx1 < (reimux + 10'd12) && flandore_bullety1 > (reimuy - 10'd11) && flandore_bullety1 < (reimuy + 10'd11))// => Ôº?
+			if(flandore_bulletx1 > (reimux - 10'd10) && flandore_bulletx1 < (reimux + 10'd12) && flandore_bullety1 > (reimuy - 10'd11) && flandore_bullety1 < (reimuy + 10'd11))// => Âöó?
 			begin
 				nt_shot1 = 1'b1;
 				nt_flandore_bullet1 = 1'b0;
@@ -231,19 +223,16 @@ module boss_bullet(
 				end
 				else
 				begin
+					nt_shot1 = 1'b0;
+					nt_flandore_bullet1 = 1'b1;
+					nt_flandore_bullety1 = flandore_bullety1 + 10'd7;
 					if(!reverse1)
 					begin
-						nt_shot1 = 1'b0;
-						nt_flandore_bullet1 = 1'b1;
 						nt_flandore_bulletx1 = flandore_bulletx1 - 10'd7;
-						nt_flandore_bullety1 = flandore_bullety1 + 10'd7;
 					end
 					else
 					begin
-						nt_shot1 = 1'b0;
-						nt_flandore_bullet1 = 1'b1;
 						nt_flandore_bulletx1 = flandore_bulletx1 + 10'd7;
-						nt_flandore_bullety1 = flandore_bullety1 + 10'd7;
 					end
 				end
 			end
@@ -266,19 +255,16 @@ module boss_bullet(
 				end
 				else
 				begin
+					nt_shot2 = 1'b0;
+					nt_flandore_bullet2 = 1'b1;
+					nt_flandore_bullety2 = flandore_bullety2 + 10'd8;
 					if(!reverse2)
 					begin
-						nt_shot2 = 1'b0;
-						nt_flandore_bullet2 = 1'b1;
 						nt_flandore_bulletx2 = flandore_bulletx2 - 10'd6;
-						nt_flandore_bullety2 = flandore_bullety2 + 10'd8;
 					end
 					else
 					begin
-						nt_shot2 = 1'b0;
-						nt_flandore_bullet2 = 1'b1;
 						nt_flandore_bulletx2 = flandore_bulletx2 + 10'd6;
-						nt_flandore_bullety2 = flandore_bullety2 + 10'd8;
 					end
 				end
 			end
@@ -301,18 +287,15 @@ module boss_bullet(
 				end
 				else
 				begin
+					nt_shot3 = 1'b0;
+					nt_flandore_bullet3 = 1'b1;
+					nt_flandore_bulletx3 = flandore_bulletx3;
 					if(!reverse3)
 					begin
-						nt_shot3 = 1'b0;
-						nt_flandore_bullet3 = 1'b1;
-						nt_flandore_bulletx3 = flandore_bulletx3;
 						nt_flandore_bullety3 = flandore_bullety3 + 10'd10;
 					end
 					else
 					begin
-						nt_shot3 = 1'b0;
-						nt_flandore_bullet3 = 1'b1;
-						nt_flandore_bulletx3 = flandore_bulletx3;
 						nt_flandore_bullety3 = flandore_bullety3 - 10'd10;
 					end
 				end
@@ -336,24 +319,21 @@ module boss_bullet(
 				end
 				else
 				begin
+					nt_shot4 = 1'b0;
+					nt_flandore_bullet4 = 1'b1;
+					nt_flandore_bullety4 = flandore_bullety4 + 10'd8;
 					if(!reverse4)
 					begin
-						nt_shot4 = 1'b0;
-						nt_flandore_bullet4 = 1'b1;
 						nt_flandore_bulletx4 = flandore_bulletx4 + 10'd6;
-						nt_flandore_bullety4 = flandore_bullety4 + 10'd8;
 					end
 					else
 					begin
-						nt_shot4 = 1'b0;
-						nt_flandore_bullet4 = 1'b1;
 						nt_flandore_bulletx4 = flandore_bulletx4 - 10'd6;
-						nt_flandore_bullety4 = flandore_bullety4 + 10'd8;
 					end
 				end
 			end
 				
-			if(flandore_bulletx5 > (reimux - 10'd10) && flandore_bulletx5 < (reimux + 10'd12) && flandore_bullety5 > (reimuy - 10'd11) && flandore_bullety5 < (reimuy + 10'd11))// => Ôº?
+			if(flandore_bulletx5 > (reimux - 10'd10) && flandore_bulletx5 < (reimux + 10'd12) && flandore_bullety5 > (reimuy - 10'd11) && flandore_bullety5 < (reimuy + 10'd11))// => Âöó?
 			begin
 				nt_shot5 = 1'b1;
 				nt_flandore_bullet5 = 1'b0;
@@ -371,19 +351,16 @@ module boss_bullet(
 				end
 				else
 				begin
+					nt_shot5 = 1'b0;
+					nt_flandore_bullet5 = 1'b1;
+					nt_flandore_bullety5 = flandore_bullety5 + 10'd7;
 					if(!reverse5)
 					begin
-						nt_shot5 = 1'b0;
-						nt_flandore_bullet5 = 1'b1;
 						nt_flandore_bulletx5 = flandore_bulletx5 + 10'd7;
-						nt_flandore_bullety5 = flandore_bullety5 + 10'd7;
 					end
 					else
 					begin
-						nt_shot5 = 1'b0;
-						nt_flandore_bullet5 = 1'b1;
 						nt_flandore_bulletx5 = flandore_bulletx5 - 10'd7;
-						nt_flandore_bullety5 = flandore_bullety5 + 10'd7;
 					end
 				end
 			end
