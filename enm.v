@@ -180,7 +180,7 @@ module enm(
 		end
 		else if(7'd40 >= enmhp2 && enmhp2 > 7'd0)
 		begin
-			if(enmy2 > 10'd180)
+			if(enmy2 < 10'd180)
 			begin
 				nt_enmy2 = enmy2 + 10'd2;
 				nt_enmx2 = enmx2;
