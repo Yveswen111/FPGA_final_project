@@ -175,6 +175,11 @@ module boss_bullet(
 	begin
 		if(!boss)
 		begin
+			nt_flandore_bullet1 = 1'b0;
+			nt_flandore_bullet2 = 1'b0;
+			nt_flandore_bullet3 = 1'b0;
+			nt_flandore_bullet4 = 1'b0;
+			nt_flandore_bullet5 = 1'b0;
 			nt_flandore_bigbulletx = 10'd0;
 			nt_flandore_bigbullety = 10'd0;
 			nt_flandore_bulletx1 = 10'd0;
