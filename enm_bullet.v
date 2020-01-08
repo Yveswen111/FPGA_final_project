@@ -16,6 +16,18 @@ module enm_bullet(
 	input enm3,
 	input enm4,
 	output shot, //get hurt
+	output reg bullet1,//output signal ,bullet exist = 1
+	output reg bullet2,
+	output reg bullet3,
+	output reg bullet4,
+	output reg bullet5,
+	output reg bullet6,
+	output reg bullet7,
+	output reg bullet8,
+	output reg bullet9,
+	output reg bullet10,
+	output reg bullet11,
+	output reg bullet12,
 	output reg [9:0]bulletx1,//enemy1 => ｜
 	output reg [9:0]bullety1,
 	output reg [9:0]bulletx2,//enemy2 => ｜
@@ -41,6 +53,8 @@ module enm_bullet(
 	output reg [9:0]bulletx12,//enemy4 => ＼
 	output reg [9:0]bullety12
 	);
+	
+	reg nt_bullet1, nt_bullet2, nt_bullet3, nt_bullet4, nt_bullet5, nt_bullet6, nt_bullet7, nt_bullet8, nt_bullet9, nt_bullet10, nt_bullet11, nt_bullet12;
 
 	reg [9:0]nt_bulletx1;
 	reg [9:0]nt_bullety1;
@@ -88,6 +102,18 @@ module enm_bullet(
 			shot10 <= 1'b0;
 			shot11 <= 1'b0;
 			shot12 <= 1'b0;
+			bullet1 <= 1'b0;
+			bullet2 <= 1'b0;
+			bullet3 <= 1'b0;
+			bullet4 <= 1'b0;
+			bullet5 <= 1'b0;
+			bullet6 <= 1'b0;
+			bullet7 <= 1'b0;
+			bullet8 <= 1'b0;
+			bullet9 <= 1'b0;
+			bullet10 <= 1'b0;
+			bullet11 <= 1'b0;
+			bullet12 <= 1'b0;
 			bulletx1 <= enmx1;
 			bullety1 <= enmy1;
 			bulletx2 <= enmx2;
@@ -127,6 +153,18 @@ module enm_bullet(
 			shot10 <= nt_shot10;
 			shot11 <= nt_shot11;
 			shot12 <= nt_shot12;
+			bullet1 <= nt_bullet1;
+			bullet2 <= nt_bullet2;
+			bullet3 <= nt_bullet3;
+			bullet4 <= nt_bullet4;
+			bullet5 <= nt_bullet5;
+			bullet6 <= nt_bullet6;
+			bullet7 <= nt_bullet7;
+			bullet8 <= nt_bullet8;
+			bullet9 <= nt_bullet9;
+			bullet10 <= nt_bullet10;
+			bullet11 <= nt_bullet11;
+			bullet12 <= nt_bullet12;
 			bulletx1 <= nt_bulletx1;
 			bullety1 <= nt_bullety1;
 			bulletx2 <= nt_bulletx2;
@@ -158,10 +196,13 @@ module enm_bullet(
 	begin
 		if(!enm1)
 		begin
+			nt_bullet1 = 1'b0;
 			nt_bulletx1 = 10'd0;
 			nt_bullety1 = 10'd0;
+			nt_bullet5 = 1'b0;
 			nt_bulletx5 = 10'd0;
 			nt_bullety5 = 10'd0;
+			nt_bullet9 = 1'b0;
 			nt_bulletx9 = 10'd0;
 			nt_bullety9 = 10'd0;
 		end
@@ -170,20 +211,23 @@ module enm_bullet(
 			if(bulletx1 > (reimux - 10'd10) && bulletx1 < (reimux + 10'd12) && bullety1 > (reimuy - 10'd11) && bullety1 < (reimuy + 10'd11))// =>｜
 			begin
 				nt_shot1 = 1'b1;
-				nt_bulletx1 = 10'd0;
-				nt_bullety1 = 10'd0;
+				nt_bullet1 = 1'b0;
+				nt_bulletx1 = enmx1;
+				nt_bullety1 = enmy1;
 			end
 			else
 			begin
 				if(bulletx1 > 10'd432 || bulletx1 < 10'd8 || bullety1 > 10'd472 || bullety1 < 10'd8)
 				begin
 					nt_shot1 = 1'b0;
+					nt_bullet1 = 1'b0;
 					nt_bulletx1 = enmx1;
 					nt_bullety1 = enmy1;
 				end
 				else
 				begin
 					nt_shot1 = 1'b0;
+					nt_bullet1 = 1'b1;
 					nt_bulletx1 = bulletx1;
 					nt_bullety1 = bullety1 + 10'd10;
 				end
@@ -192,20 +236,23 @@ module enm_bullet(
 			if(bulletx5 > (reimux - 10'd10) && bulletx5 < (reimux + 10'd12) && bullety5 > (reimuy - 10'd11) && bullety5 < (reimuy + 10'd11))// =>　／
 			begin
 				nt_shot5 = 1'b1;
-				nt_bulletx5 = 10'd0;
-				nt_bullety5 = 10'd0;
+				nt_bullet5 = 1'b0;
+				nt_bulletx5 = enmx1;
+				nt_bullety5 = enmy1;
 			end
 			else
 			begin
 				if(bulletx5 > 10'd432 || bulletx5 < 10'd8 || bullety5 > 10'd472 || bullety5 < 10'd8)
 				begin
 					nt_shot5 = 1'b0;
+					nt_bullet5 = 1'b0;
 					nt_bulletx5 = enmx1;
 					nt_bullety5 = enmy1;
 				end
 				else
 				begin
 					nt_shot5 = 1'b0;
+					nt_bullet1 = 1'b1;
 					nt_bulletx5 = bulletx5 - 10'd7;
 					nt_bullety5 = bullety5 + 10'd7;
 				end
@@ -214,20 +261,23 @@ module enm_bullet(
 			if(bulletx9 > (reimux - 10'd10) && bulletx9 < (reimux + 10'd12) && bullety9 > (reimuy - 10'd11) && bullety9 < (reimuy + 10'd11))// =>　＼
 			begin
 				nt_shot9 = 1'b1;
-				nt_bulletx9 = 10'd0;
-				nt_bullety9 = 10'd0;
+				nt_bullet9 = 1'b0;
+				nt_bulletx9 = enmx1;
+				nt_bullety9 = enmy1;
 			end
 			else
 			begin
 				if(bulletx9 > 10'd432 || bulletx9 < 10'd8 || bullety9 > 10'd472 || bullety9 < 10'd8)
 				begin
 					nt_shot9 = 1'b0;
+					nt_bullet9 = 1'b0;
 					nt_bulletx9 = enmx1;
 					nt_bullety9 = enmy1;
 				end
 				else
 				begin
 					nt_shot9 = 1'b0;
+					nt_bullet9 = 1'b1;
 					nt_bulletx9 = bulletx9 + 10'd7;
 					nt_bullety9 = bullety9 + 10'd7;
 				end
@@ -239,10 +289,13 @@ module enm_bullet(
 	begin
 		if(!enm2)
 		begin
+			nt_bullet2 = 1'b0;
 			nt_bulletx2 = 10'd0;
 			nt_bullety2 = 10'd0;
+			nt_bullet6 = 1'b0;
 			nt_bulletx6 = 10'd0;
 			nt_bullety6 = 10'd0;
+			nt_bullet10 = 1'b0;
 			nt_bulletx10 = 10'd0;
 			nt_bullety10 = 10'd0;
 		end
@@ -252,20 +305,23 @@ module enm_bullet(
 			if(bulletx2 > (reimux - 10'd10) && bulletx2 < (reimux + 10'd12) && bullety2 > (reimuy - 10'd11) && bullety2 < (reimuy + 10'd11))// =>｜
 			begin
 				nt_shot2 = 1'b1;
-				nt_bulletx2 = 10'd0;
-				nt_bullety2 = 10'd0;
+				nt_bullet2 = 1'b0;
+				nt_bulletx2 = enmx2;
+				nt_bullety2 = enmy2;
 			end
 			else
 			begin
 				if(bulletx2 > 10'd432 || bulletx2 < 10'd8 || bullety2 > 10'd472 || bullety2 < 10'd8)
 				begin
 					nt_shot2 = 1'b0;
+					nt_bullet2 = 1'b0;
 					nt_bulletx2 = enmx2;
 					nt_bullety2 = enmy2;
 				end
 				else
 				begin
 					nt_shot2 = 1'b0;
+					nt_bullet2 = 1'b1;
 					nt_bulletx2 = bulletx2;
 					nt_bullety2 = bullety2 + 10'd10;
 				end
@@ -274,20 +330,23 @@ module enm_bullet(
 			if(bulletx6 > (reimux - 10'd10) && bulletx6 < (reimux + 10'd12) && bullety6 > (reimuy - 10'd11) && bullety6 < (reimuy + 10'd11))// =>　／
 			begin
 				nt_shot6 = 1'b1;
-				nt_bulletx6 = 10'd0;
-				nt_bullety6 = 10'd0;
+				nt_bullet6 = 1'b0;
+				nt_bulletx6 = enmx2;
+				nt_bullety6 = enmy2;
 			end
 			else
 			begin
 				if(bulletx6 > 10'd432 || bulletx6 < 10'd8 || bullety6 > 10'd472 || bullety6 < 10'd8)
 				begin
 					nt_shot6 = 1'b0;
+					nt_bullet6 = 1'b0;
 					nt_bulletx6 = enmx2;
 					nt_bullety6 = enmy2;
 				end
 				else
 				begin
 					nt_shot6 = 1'b0;
+					nt_bullet6 = 1'b1;
 					nt_bulletx6 = bulletx6 - 10'd7;
 					nt_bullety6 = bullety6 + 10'd7;
 				end
@@ -296,20 +355,23 @@ module enm_bullet(
 			if(bulletx10 > (reimux - 10'd10) && bulletx10 < (reimux + 10'd12) && bullety10 > (reimuy - 10'd11) && bullety10 < (reimuy + 10'd11))// =>　＼
 			begin
 				nt_shot10 = 1'b1;
-				nt_bulletx10 = 10'd0;
-				nt_bullety10 = 10'd0;
+				nt_bullet10 = 1'b0;
+				nt_bulletx10 = enmx2;
+				nt_bullety10 = enmy2;
 			end
 			else
 			begin
 				if(bulletx10 > 10'd432 || bulletx10 < 10'd8 || bullety10 > 10'd472 || bullety10 < 10'd8)
 				begin
 					nt_shot10 = 1'b0;
+					nt_bullet10 = 1'b0;
 					nt_bulletx10 = enmx2;
 					nt_bullety10 = enmy2;
 				end
 				else
 				begin
 					nt_shot10 = 1'b0;
+					nt_bullet10 = 1'b1;
 					nt_bulletx10 = bulletx10 + 10'd7;
 					nt_bullety10 = bullety10 + 10'd7;
 				end
@@ -321,10 +383,13 @@ module enm_bullet(
 	begin
 		if(!enm3)
 		begin
+			nt_bullet3 = 1'b0;
 			nt_bulletx3 = 10'd0;
 			nt_bullety3 = 10'd0;
+			nt_bullet7 = 1'b0;
 			nt_bulletx7 = 10'd0;
 			nt_bullety7 = 10'd0;
+			nt_bullet11 = 1'b0;
 			nt_bulletx11 = 10'd0;
 			nt_bullety11 = 10'd0;
 		end
@@ -334,20 +399,23 @@ module enm_bullet(
 			if(bulletx3 > (reimux - 10'd10) && bulletx3 < (reimux + 10'd12) && bullety3 > (reimuy - 10'd11) && bullety3 < (reimuy + 10'd11))// =>｜
 			begin
 				nt_shot3 = 1'b1;
-				nt_bulletx3 = 10'd0;
-				nt_bullety3 = 10'd0;
+				nt_bullet3 = 1'b0;
+				nt_bulletx3 = enmx3;
+				nt_bullety3 = enmy3;
 			end
 			else
 			begin
 				if(bulletx3 > 10'd432 || bulletx3 < 10'd8 || bullety3 > 10'd472 || bullety3 < 10'd8)
 				begin
 					nt_shot3 = 1'b0;
+					nt_bullet3 = 1'b0;
 					nt_bulletx3 = enmx3;
 					nt_bullety3 = enmy3;
 				end
 				else
 				begin
 					nt_shot3 = 1'b0;
+					nt_bullet3 = 1'b1;
 					nt_bulletx3 = bulletx3;
 					nt_bullety3 = bullety3 + 10'd10;
 				end
@@ -356,20 +424,23 @@ module enm_bullet(
 			if(bulletx7 > (reimux - 10'd10) && bulletx7 < (reimux + 10'd12) && bullety7 > (reimuy - 10'd11) && bullety7 < (reimuy + 10'd11))// =>　／
 			begin
 				nt_shot7 = 1'b1;
-				nt_bulletx7 = 10'd0;
-				nt_bullety7 = 10'd0;
+				nt_bullet7 = 1'b0;
+				nt_bulletx7 = enmx3;
+				nt_bullety7 = enmy3;
 			end
 			else
 			begin
 				if(bulletx7 > 10'd432 || bulletx7 < 10'd8 || bullety7 > 10'd472 || bullety7 < 10'd8)
 				begin
 					nt_shot7 = 1'b0;
+					nt_bullet7 = 1'b0;
 					nt_bulletx7 = enmx3;
 					nt_bullety7 = enmy3;
 				end
 				else
 				begin
 					nt_shot7 = 1'b0;
+					nt_bullet7 = 1'b1;
 					nt_bulletx7 = bulletx7 - 10'd7;
 					nt_bullety7 = bullety7 + 10'd7;
 				end
@@ -378,20 +449,23 @@ module enm_bullet(
 			if(bulletx11 > (reimux - 10'd10) && bulletx11 < (reimux + 10'd12) && bullety11 > (reimuy - 10'd11) && bullety11 < (reimuy + 10'd11))// =>　＼
 			begin
 				nt_shot11 = 1'b1;
-				nt_bulletx11 = 10'd0;
-				nt_bullety11 = 10'd0;
+				nt_bullet11 = 1'b0;
+				nt_bulletx11 = enmx3;
+				nt_bullety11 = enmy3;
 			end
 			else
 			begin
 				if(bulletx11 > 10'd432 || bulletx11 < 10'd8 || bullety11 > 10'd472 || bullety11 < 10'd8)
 				begin
 					nt_shot11 = 1'b0;
+					nt_bullet11 = 1'b0;
 					nt_bulletx11 = enmx3;
 					nt_bullety11 = enmy3;
 				end
 				else
 				begin
 					nt_shot11 = 1'b0;
+					nt_bullet11 = 1'b1;
 					nt_bulletx11 = bulletx11 + 10'd7;
 					nt_bullety11 = bullety11 + 10'd7;
 				end
@@ -403,10 +477,13 @@ module enm_bullet(
 	begin
 		if(!enm4)
 		begin
+			nt_bullet4 = 1'b0;
 			nt_bulletx4 = 10'd0;
 			nt_bullety4 = 10'd0;
+			nt_bullet8 = 1'b0;
 			nt_bulletx8 = 10'd0;
 			nt_bullety8 = 10'd0;
+			nt_bullet12 = 1'b0;
 			nt_bulletx12 = 10'd0;
 			nt_bullety12 = 10'd0;
 		end
@@ -416,20 +493,23 @@ module enm_bullet(
 			if(bulletx4 > (reimux - 10'd10) && bulletx4 < (reimux + 10'd12) && bullety4 > (reimuy - 10'd11) && bullety4 < (reimuy + 10'd11))// =>｜
 			begin
 				nt_shot4 = 1'b1;
-				nt_bulletx4 = 10'd0;
-				nt_bullety4 = 10'd0;
+				nt_bullet4 = 1'b0;
+				nt_bulletx4 = enmx4;
+				nt_bullety4 = enmy4;
 			end
 			else
 			begin
-				if(bulletx1 > 10'd432 || bulletx1 < 10'd8 || bullety1 > 10'd472 || bullety1 < 10'd8)
+				if(bulletx4 > 10'd432 || bulletx4 < 10'd8 || bullety4 > 10'd472 || bullety4 < 10'd8)
 				begin
 					nt_shot4 = 1'b0;
+					nt_bullet4 = 1'b0;
 					nt_bulletx4 = enmx4;
 					nt_bullety4 = enmy4;
 				end
 				else
 				begin
 					nt_shot4 = 1'b0;
+					nt_bullet4 = 1'b1;
 					nt_bulletx4 = bulletx4;
 					nt_bullety4 = bullety4 + 10'd10;
 				end
@@ -438,20 +518,23 @@ module enm_bullet(
 			if(bulletx8 > (reimux - 10'd10) && bulletx8 < (reimux + 10'd12) && bullety8 > (reimuy - 10'd11) && bullety8 < (reimuy + 10'd11))// =>　／
 			begin
 				nt_shot8 = 1'b1;
-				nt_bulletx8 = 10'd0;
-				nt_bullety8 = 10'd0;
+				nt_bullet8 = 1'b0;
+				nt_bulletx8 = enmx4;
+				nt_bullety8 = enmy4;
 			end
 			else
 			begin
 				if(bulletx8 > 10'd432 || bulletx8 < 10'd8 || bullety8 > 10'd472 || bullety8 < 10'd8)
 				begin
 					nt_shot8 = 1'b0;
+					nt_bullet8 = 1'b0;
 					nt_bulletx8 = enmx4;
 					nt_bullety8 = enmy4;
 				end
 				else
 				begin
 					nt_shot8 = 1'b0;
+					nt_bullet8 = 1'b1;
 					nt_bulletx8 = bulletx8 - 10'd7;
 					nt_bullety8 = bullety8 + 10'd7;
 				end
@@ -460,20 +543,23 @@ module enm_bullet(
 			if(bulletx12 > (reimux - 10'd10) && bulletx12 < (reimux + 10'd12) && bullety12 > (reimuy - 10'd11) && bullety12 < (reimuy + 10'd11))// =>　＼
 			begin
 				nt_shot12 = 1'b1;
-				nt_bulletx12 = 10'd0;
-				nt_bullety12 = 10'd0;
+				nt_bullet12 = 1'b0;
+				nt_bulletx12 = enmx4;
+				nt_bullety12 = enmy4;
 			end
 			else
 			begin
 				if(bulletx12 > 10'd440 || bulletx12 < 10'd8 || bullety12 > 10'd472 || bullety12 < 10'd8)
 				begin
 					nt_shot12 = 1'b0;
+					nt_bullet12 = 1'b0;
 					nt_bulletx12 = enmx4;
 					nt_bullety12 = enmy4;
 				end
 				else
 				begin
 					nt_shot12 = 1'b0;
+					nt_bullet12 = 1'b1;
 					nt_bulletx12 = bulletx12 + 10'd7;
 					nt_bullety12 = bullety12 + 10'd7;
 				end
