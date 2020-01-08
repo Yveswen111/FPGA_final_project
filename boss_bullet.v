@@ -1,7 +1,6 @@
 module boss_bullet(
 	input rst,
 	input clk22,
-	input gamestart,
 	input [9:0]reimux,
 	input [9:0]reimuy,
 	input [9:0]bossx,
@@ -53,7 +52,7 @@ module boss_bullet(
 	
 	always@(posedge clk22)
 	begin
-		if(rst || !boss || gamestart)
+		if(rst || !boss)
 		begin
 			shot1 <= 1'b0;
 			shot2 <= 1'b0;
@@ -217,7 +216,7 @@ module boss_bullet(
 				begin
 					nt_shot1 = 1'b0;
 					nt_flandore_bullet1 = 1'b1;
-					nt_flandore_bullety1 = flandore_bullety1 + 10'd8;
+					nt_flandore_bullety1 = flandore_bullety1 + 10'd4;
 					if(!reverse1)
 					begin
 						nt_flandore_bulletx1 = flandore_bulletx1 - 10'd8;
@@ -249,7 +248,7 @@ module boss_bullet(
 				begin
 					nt_shot2 = 1'b0;
 					nt_flandore_bullet2 = 1'b1;
-					nt_flandore_bullety2 = flandore_bullety2 + 10'd10;
+					nt_flandore_bullety2 = flandore_bullety2 + 10'd3;
 					if(!reverse2)
 					begin
 						nt_flandore_bulletx2 = flandore_bulletx2 - 10'd9;
@@ -277,7 +276,7 @@ module boss_bullet(
 				end
 				else
 				begin
-					if(flandore_bulletx3 > 10'd432 || flandore_bulletx3 < 10'd8 || flandore_bullety3 < 10'd8)
+					if(flandore_bulletx3 > 10'd432 || flandore_bulletx3 < 10'd8 || flandore_bullety3 < 10'd15)
 					begin
 						nt_shot3 = 1'b0;
 						nt_flandore_bullet3 = 1'b0;
@@ -292,11 +291,11 @@ module boss_bullet(
 						nt_flandore_bulletx3 = flandore_bulletx3;
 						if(!reverse3)
 						begin
-							nt_flandore_bullety3 = flandore_bullety3 + 10'd15;
+							nt_flandore_bullety3 = flandore_bullety3 + 10'd10;
 						end
 						else
 						begin
-							nt_flandore_bullety3 = flandore_bullety3 - 10'd15;
+							nt_flandore_bullety3 = flandore_bullety3 - 10'd10;
 						end
 					end
 				end
@@ -322,7 +321,7 @@ module boss_bullet(
 				begin
 					nt_shot4 = 1'b0;
 					nt_flandore_bullet4 = 1'b1;
-					nt_flandore_bullety4 = flandore_bullety4 + 10'd10;
+					nt_flandore_bullety4 = flandore_bullety4 + 10'd3;
 					if(!reverse4)
 					begin
 						nt_flandore_bulletx4 = flandore_bulletx4 + 10'd9;
@@ -354,7 +353,7 @@ module boss_bullet(
 				begin
 					nt_shot5 = 1'b0;
 					nt_flandore_bullet5 = 1'b1;
-					nt_flandore_bullety5 = flandore_bullety5 + 10'd8;
+					nt_flandore_bullety5 = flandore_bullety5 + 10'd4;
 					if(!reverse5)
 					begin
 						nt_flandore_bulletx5 = flandore_bulletx5 + 10'd8;
@@ -386,8 +385,15 @@ module boss_bullet(
 				begin
 					nt_shot6 = 1'b0;
 					nt_flandore_bigbullet = 1'b1;
-					nt_flandore_bigbulletx = flandore_bigbulletx;
 					nt_flandore_bigbullety = flandore_bigbullety + 10'd12;
+					if(bossx > reimux)
+					begin
+						nt_flandore_bigbulletx = flandore_bigbulletx + (bossx - reimux) / 10;
+					end
+					else
+					begin
+						nt_flandore_bigbulletx = flandore_bigbulletx + (reimux - bossx) / 10;
+					end
 				end
 			end
 		end
