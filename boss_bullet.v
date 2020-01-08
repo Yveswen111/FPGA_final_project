@@ -1,6 +1,7 @@
 module boss_bullet(
 	input rst,
 	input clk22,
+	input gamestart,
 	input [9:0]reimux,
 	input [9:0]reimuy,
 	input [9:0]bossx,
@@ -52,7 +53,7 @@ module boss_bullet(
 	
 	always@(posedge clk22)
 	begin
-		if(rst || !boss)
+		if(rst || !boss || gamestart)
 		begin
 			shot1 <= 1'b0;
 			shot2 <= 1'b0;
