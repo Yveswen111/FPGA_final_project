@@ -386,14 +386,14 @@ module boss_bullet(
 				begin
 					nt_shot6 = 1'b0;
 					nt_flandore_bigbullet = 1'b1;
-					nt_flandore_bigbullety = flandore_bigbullety + 10'd6;
+					nt_flandore_bigbullety = flandore_bigbullety + 10'd5;
 					if(bossx > reimux)
 					begin
-						nt_flandore_bigbulletx = flandore_bigbulletx - (bossx - reimux) / 10'd10;
+						nt_flandore_bigbulletx = flandore_bigbulletx - (bossx - reimux) / 10'd15;
 					end
 					else
 					begin
-						nt_flandore_bigbulletx = flandore_bigbulletx + (reimux - bossx) / 10'd10;
+						nt_flandore_bigbulletx = flandore_bigbulletx + (reimux - bossx) / 10'd15;
 					end
 				end
 			end
