@@ -144,20 +144,6 @@ module boss_bullet(
 		begin
 			nt_reverse2 = reverse2;
 		end
-		
-		if(flandore_bullety3 > 10'd450)
-		begin
-			nt_reverse3 = 1'b1;
-		end
-		else if(flandore_bullety3 < 10'd30)
-		begin
-			nt_reverse3 = 1'b0;
-		end
-		else
-		begin
-			nt_reverse3 = reverse3;
-		end
-		
 		if(flandore_bulletx4 > 10'd410)
 		begin
 			nt_reverse4 = 1'b1;
@@ -214,7 +200,7 @@ module boss_bullet(
 			end
 			else
 			begin
-				if(flandore_bulletx1 > 10'd432 || flandore_bulletx1 < 10'd8 || flandore_bullety1 > 10'd472 || flandore_bullety1 < 10'd8)
+				if(flandore_bullety1 > 10'd472 || flandore_bullety1 < 10'd8)
 				begin
 					nt_shot1 = 1'b0;
 					nt_flandore_bullet1 = 1'b0;
@@ -225,14 +211,14 @@ module boss_bullet(
 				begin
 					nt_shot1 = 1'b0;
 					nt_flandore_bullet1 = 1'b1;
-					nt_flandore_bullety1 = flandore_bullety1 + 10'd7;
+					nt_flandore_bullety1 = flandore_bullety1 + 10'd8;
 					if(!reverse1)
 					begin
-						nt_flandore_bulletx1 = flandore_bulletx1 - 10'd7;
+						nt_flandore_bulletx1 = flandore_bulletx1 - 10'd8;
 					end
 					else
 					begin
-						nt_flandore_bulletx1 = flandore_bulletx1 + 10'd7;
+						nt_flandore_bulletx1 = flandore_bulletx1 + 10'd8;
 					end
 				end
 			end
@@ -246,7 +232,7 @@ module boss_bullet(
 			end
 			else
 			begin
-				if(flandore_bulletx2 > 10'd432 || flandore_bulletx2 < 10'd8 || flandore_bullety2 > 10'd472 || flandore_bullety2 < 10'd8)
+				if(flandore_bullety2 > 10'd472 || flandore_bullety2 < 10'd8)
 				begin
 					nt_shot2 = 1'b0;
 					nt_flandore_bullet2 = 1'b0;
@@ -257,14 +243,14 @@ module boss_bullet(
 				begin
 					nt_shot2 = 1'b0;
 					nt_flandore_bullet2 = 1'b1;
-					nt_flandore_bullety2 = flandore_bullety2 + 10'd8;
+					nt_flandore_bullety2 = flandore_bullety2 + 10'd10;
 					if(!reverse2)
 					begin
-						nt_flandore_bulletx2 = flandore_bulletx2 - 10'd6;
+						nt_flandore_bulletx2 = flandore_bulletx2 - 10'd9;
 					end
 					else
 					begin
-						nt_flandore_bulletx2 = flandore_bulletx2 + 10'd6;
+						nt_flandore_bulletx2 = flandore_bulletx2 + 10'd9;
 					end
 				end
 			end
@@ -275,28 +261,37 @@ module boss_bullet(
 				nt_flandore_bullet3 = 1'b0;
 				nt_flandore_bulletx3 = bossx;
 				nt_flandore_bullety3 = bossy;
+				nt_reverse3 = 1'b0;
 			end
 			else
 			begin
-				if(flandore_bulletx3 > 10'd432 || flandore_bulletx3 < 10'd8 || flandore_bullety3 > 10'd472 || flandore_bullety3 < 10'd8)
+				if(flandore_bullety3 > 10'd450)
 				begin
-					nt_shot3 = 1'b0;
-					nt_flandore_bullet3 = 1'b0;
-					nt_flandore_bulletx3 = bossx;
-					nt_flandore_bullety3 = bossy;
+					nt_reverse3 = 1'b1;
 				end
 				else
 				begin
-					nt_shot3 = 1'b0;
-					nt_flandore_bullet3 = 1'b1;
-					nt_flandore_bulletx3 = flandore_bulletx3;
-					if(!reverse3)
+					if(flandore_bulletx3 > 10'd432 || flandore_bulletx3 < 10'd8 || flandore_bullety3 < 10'd8)
 					begin
-						nt_flandore_bullety3 = flandore_bullety3 + 10'd10;
+						nt_shot3 = 1'b0;
+						nt_flandore_bullet3 = 1'b0;
+						nt_flandore_bulletx3 = bossx;
+						nt_flandore_bullety3 = bossy;
+						nt_reverse3 = 1'b0;
 					end
 					else
 					begin
-						nt_flandore_bullety3 = flandore_bullety3 - 10'd10;
+						nt_shot3 = 1'b0;
+						nt_flandore_bullet3 = 1'b1;
+						nt_flandore_bulletx3 = flandore_bulletx3;
+						if(!reverse3)
+						begin
+							nt_flandore_bullety3 = flandore_bullety3 + 10'd15;
+						end
+						else
+						begin
+							nt_flandore_bullety3 = flandore_bullety3 - 10'd15;
+						end
 					end
 				end
 			end
@@ -310,7 +305,7 @@ module boss_bullet(
 			end
 			else
 			begin
-				if(flandore_bulletx4 > 10'd432 || flandore_bulletx4 < 10'd8 || flandore_bullety4 > 10'd472 || flandore_bullety4 < 10'd8)
+				if(flandore_bullety4 > 10'd472 || flandore_bullety4 < 10'd8)
 				begin
 					nt_shot4 = 1'b0;
 					nt_flandore_bullet4 = 1'b0;
@@ -321,14 +316,14 @@ module boss_bullet(
 				begin
 					nt_shot4 = 1'b0;
 					nt_flandore_bullet4 = 1'b1;
-					nt_flandore_bullety4 = flandore_bullety4 + 10'd8;
+					nt_flandore_bullety4 = flandore_bullety4 + 10'd10;
 					if(!reverse4)
 					begin
-						nt_flandore_bulletx4 = flandore_bulletx4 + 10'd6;
+						nt_flandore_bulletx4 = flandore_bulletx4 + 10'd9;
 					end
 					else
 					begin
-						nt_flandore_bulletx4 = flandore_bulletx4 - 10'd6;
+						nt_flandore_bulletx4 = flandore_bulletx4 - 10'd9;
 					end
 				end
 			end
@@ -342,7 +337,7 @@ module boss_bullet(
 			end
 			else
 			begin
-				if(flandore_bulletx5 > 10'd432 || flandore_bulletx5 < 10'd8 || flandore_bullety5 > 10'd472 || flandore_bullety5 < 10'd8)
+				if(flandore_bullety5 > 10'd472 || flandore_bullety5 < 10'd8)
 				begin
 					nt_shot5 = 1'b0;
 					nt_flandore_bullet5 = 1'b0;
@@ -353,14 +348,14 @@ module boss_bullet(
 				begin
 					nt_shot5 = 1'b0;
 					nt_flandore_bullet5 = 1'b1;
-					nt_flandore_bullety5 = flandore_bullety5 + 10'd7;
+					nt_flandore_bullety5 = flandore_bullety5 + 10'd8;
 					if(!reverse5)
 					begin
-						nt_flandore_bulletx5 = flandore_bulletx5 + 10'd7;
+						nt_flandore_bulletx5 = flandore_bulletx5 + 10'd8;
 					end
 					else
 					begin
-						nt_flandore_bulletx5 = flandore_bulletx5 - 10'd7;
+						nt_flandore_bulletx5 = flandore_bulletx5 - 10'd8;
 					end
 				end
 			end
@@ -370,7 +365,7 @@ module boss_bullet(
 				nt_shot6 = 1'b1;
 				nt_flandore_bigbullet = 1'b0;
 				nt_flandore_bigbulletx = bossx;
-				nt_flandore_bigbullety = bossy + 10'd75;
+				nt_flandore_bigbullety = bossy + 10'd30;
 			end
 			else
 			begin
@@ -379,14 +374,14 @@ module boss_bullet(
 					nt_shot6 = 1'b0;
 					nt_flandore_bigbullet = 1'b0;
 					nt_flandore_bigbulletx = bossx;
-					nt_flandore_bigbullety = bossy + 10'd75;
+					nt_flandore_bigbullety = bossy + 10'd30;
 				end
 				else
 				begin
 					nt_shot6 = 1'b0;
 					nt_flandore_bigbullet = 1'b1;
 					nt_flandore_bigbulletx = flandore_bigbulletx;
-					nt_flandore_bigbullety = flandore_bigbullety + 10'd5;
+					nt_flandore_bigbullety = flandore_bigbullety + 10'd12;
 				end
 			end
 		end
