@@ -277,7 +277,7 @@ module boss_bullet(
 				end
 				else
 				begin
-					if(flandore_bulletx3 > 10'd432 || flandore_bulletx3 < 10'd8 || flandore_bullety3 < 10'd15)
+					if(flandore_bulletx3 > 10'd432 || flandore_bulletx3 < 10'd8 || flandore_bullety3 < 10'd15 || flandore_bullety3 > 10'd465)
 					begin
 						nt_shot3 = 1'b0;
 						nt_flandore_bullet3 = 1'b0;
