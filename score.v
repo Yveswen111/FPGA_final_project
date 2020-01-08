@@ -4,6 +4,7 @@ module score(
 	input shot_reimu,
 	input shot_enm,
 	input shot_boss,
+	input gamestart,
 	input [6:0]enmhp1,
 	input [6:0]enmhp2,
 	input [6:0]enmhp3,
@@ -25,7 +26,7 @@ module score(
 	
 	always@(posedge clk22)
 	begin
-		if(rst)
+		if(rst||gamestart)
 		begin
 		    enm <= 4'b0000;
 			boss <= 1'b0;

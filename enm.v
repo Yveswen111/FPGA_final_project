@@ -1,6 +1,7 @@
 module enm(
 	input rst,
 	input clk22,
+	input gamestart,
 	input [6:0]enmhp1,
 	input [6:0]enmhp2,
 	input [6:0]enmhp3,
@@ -34,7 +35,7 @@ module enm(
 	reg [9:0]nt_enmy4;
 	
 	always@(posedge clk22)begin
-		if(rst)
+		if(rst || gamestart)
 		begin
 			enm1 <= 1'b0;
 			enm2 <= 1'b0;

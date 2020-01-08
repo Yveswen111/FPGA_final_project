@@ -1,7 +1,7 @@
-module reimu(rst,clk22,gameover,btnstate,reimux,reimuy);//自機
+module reimu(rst,clk22,gamestart,btnstate,reimux,reimuy);//自機
     input rst;
 	input clk22;
-	input gameover;
+	input gamestart;
 	input [3:0]btnstate;
 	/*
 	keyboard
@@ -17,7 +17,7 @@ module reimu(rst,clk22,gameover,btnstate,reimux,reimuy);//自機
 
 	always@(posedge clk22)
 	begin
-		if(rst || gameover)
+		if(rst || gamestart)
 		begin
 			reimux <= 10'd220;
 			reimuy <= 10'd360;

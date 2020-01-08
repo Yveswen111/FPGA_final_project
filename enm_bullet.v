@@ -1,6 +1,7 @@
 module enm_bullet(
 	input rst,
 	input clk22,
+	input gamestart,
 	input [9:0]reimux,
 	input [9:0]reimuy,
 	input [9:0]enmx1,
@@ -88,7 +89,7 @@ module enm_bullet(
 
 	always@(posedge clk22)
 	begin
-		if(rst)
+		if(rst || gamestart)
 		begin
 			shot1 <= 1'b0;
 			shot2 <= 1'b0;

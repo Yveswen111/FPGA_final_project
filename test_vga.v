@@ -92,8 +92,13 @@ module top(
 	wire [9:0]flandore_bullety4;
 	wire [9:0]flandore_bulletx5;
 	wire [9:0]flandore_bullety5;
+	wire space;
+	wire [1:0]scene;
+	wire gamestart;
+	wire shot_boss, shot_enm, shot_reimu;
+	wire [3:0]score0, score1, score2, score3;
 	
-	assign shot = shot1|shot2;
+	assign shot = shot1||shot2;
 	
 	KeyboardDecoder key_de (
 		.key_down(key_down),
@@ -140,7 +145,24 @@ module top(
 		.enmx3(enmx3),
 		.enmy3(enmy3),
 		.enmx4(enmx4),
-		.enmy4(enmy4)
+		.enmy4(enmy4),
+		.gamestart(gamestart)
+	);
+	
+	scene_changer sc(
+		.clk_22(clk_22),
+		.rst(rst),
+		.space(space),
+		.bosshp(bosshp),
+		.life(life),
+		.scene(scene),
+		.gamestart(gamestart)
+	);
+	
+	OnePulse op(
+		.signal_single_pulse(space),
+		.signal(shoot),
+		.clock(clk_22)
 	);
 	
 	enm_bullet eb1 (
@@ -196,7 +218,8 @@ module top(
 		.bullet9 (bullet9),
 		.bullet10 (bullet10),
 		.bullet11 (bullet11),
-		.bullet12 (bullet12)
+		.bullet12 (bullet12),
+		.gamestart(gamestart)
 	);
 	
 	reimu_life rl(
@@ -204,12 +227,13 @@ module top(
 		.shot(shot),
 		.rst(rst),
 		.life(life),
-		.reimuE(reimuE)
+		.reimuE(reimuE),
+		.gamestart(gamestart)
 	);
 	
 	reimu myp(
 		.clk22(clk_22),
-		.gameover(0),
+		.gamestart(gamestart),
 		.btnstate(input_sig),
 		.reimux(reimux),
 		.reimuy(reimuy),
@@ -226,7 +250,8 @@ module top(
 		.bosshp(bosshp),
 		.bossx(bossx),
 		.bossy(bossy),
-		.boss(boss)
+		.boss(boss),
+		.gamestart(gamestart)
 	);
 	
 	reimu_bullet rb(
@@ -253,7 +278,10 @@ module top(
 		.enmy3(enmy3),
 		.enmx4(enmx4),
 		.enmy4(enmy4),
-		.reimuE(reimuE)
+		.reimuE(reimuE),
+		.gamestart(gamestart),
+		.shot_enm (shot_enm),
+		.shot_boss (shot_boss)
 	);
 	
 	boss_bullet bb1 (
@@ -282,7 +310,26 @@ module top(
 		.flandore_bulletx4 (flandore_bulletx4),
 		.flandore_bullety4 (flandore_bullety4),
 		.flandore_bulletx5 (flandore_bulletx5),
-		.flandore_bullety5 (flandore_bullety5)
+		.flandore_bullety5 (flandore_bullety5),
+		.gamestart(gamestart)
+	);
+	
+	score sc1 (
+		.rst (rst),
+		.clk22 (clk_21),
+		.shot_reimu (shot_reimu_de),
+		.shot_enm (shot_enm),
+		.shot_boss (shot_boss),
+		.enmhp1 (enmhp1),
+		.enmhp2 (enmhp2),
+		.enmhp3 (enmhp3),
+		.enmhp4 (enmhp4),
+		.bosshp (bosshp),
+		.score0 (score0),
+		.score1 (score1),
+		.score2 (score2),
+		.score3 (score3),
+		.gamestart(gamestart)
 	);
 
 	vga_RGB rgb(
@@ -369,7 +416,12 @@ module top(
 		.flandore_bullety4 (flandore_bullety4),
 		.flandore_bulletx5 (flandore_bulletx5),
 		.flandore_bullety5 (flandore_bullety5),
-		.life(life)
+		.life(life),
+		.scene(scene),
+		.score0 (score0),
+		.score1 (score1),
+		.score2 (score2),
+		.score3 (score3)
 	);
 
     vga_controller   vga_inst(

@@ -1,4 +1,4 @@
-module boss(rst,clk22,enm1,enm2,enm3,enm4,bosshp,bossx,bossy,boss);
+module boss(rst,clk22,enm1,enm2,enm3,enm4,bosshp,bossx,bossy,boss,gamestart);
 	input rst;
 	input clk22;
 	input enm1;
@@ -6,6 +6,7 @@ module boss(rst,clk22,enm1,enm2,enm3,enm4,bosshp,bossx,bossy,boss);
 	input enm3;
 	input enm4;
 	input [9:0] bosshp;
+	input gamestart;
 	output reg [9:0] bossx;
 	output reg [9:0] bossy;
 	output reg boss;
@@ -18,7 +19,7 @@ module boss(rst,clk22,enm1,enm2,enm3,enm4,bosshp,bossx,bossy,boss);
 	assign enm = enm1 | enm2 | enm3 | enm4;//if enm = 0 then boss comes
 
 	always@(posedge clk22)begin
-		if(rst)
+		if(rst||gamestart)
 		begin
 			boss <= 1'b0;
 			bossx <= 10'd0;

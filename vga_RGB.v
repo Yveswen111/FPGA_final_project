@@ -97,13 +97,15 @@ module vga_RGB(input clk_25m, valid,
 	input [9:0]flandore_bullety4,
 	input [9:0]flandore_bulletx5,
 	input [9:0]flandore_bullety5,
-	input [1:0]life
+	input [1:0]life,
+	input [1:0]scene,
+	input [3:0]score0, score1, score2, score3
 	);
 	
 	reg [11:0]char;
 	reg [11:0]bullet;
 	reg [11:0]background;
-	wire [11:0]life_dis;
+	wire [11:0]life_dis, score_dis;
 	
 	wire [2:0]red_star_E;
 	
@@ -143,8 +145,18 @@ module vga_RGB(input clk_25m, valid,
 	assign adrst = adrst1|adrst2|adrst3;
 	wire [11:0]Dst;
 	StarPic i10(clk_25m, adrst, Dst);
+	reg [16:0]adrnum0, adrnum1, adrnum2, adrnum3;//number select
+	reg [3:0]num;
+	wire adrnum;
+	assign adrnum = adrnum0|adrnum1|adrnum2|adrnum3;
+	wire [11:0]Dnum;
+	NumSelect i11(clk_25m, adrnum, num, Dnum);
+	reg [16:0]adrsco;//score word
+	wire [11:0]Dsco;
+	ScoPic i12(clk_25m, adrsco, Dsco);
 	
 	assign life_dis = Dst|Dino;
+	assign score_dis = Dsco|Dnum;
 	
 	always@(*) begin//player position calculate.
 		if((hc<=reimux+15)&&(hc>reimux-15)&&(vc>=reimuy-25)&&(vc<reimuy+25))
@@ -255,6 +267,77 @@ module vga_RGB(input clk_25m, valid,
 			adrst3 = 17'd0;
 	end
 	
+	always@(*)begin//score number position
+		case(scene)
+			2'b01:begin
+				if((hc<=10'd565)&&(hc>10'd541)&&(vc>=10'd166)&&(vc<10'd191))
+					adrnum1 = hc-541+25*(vc-166);
+				else
+					adrnum1 = 17'd0;
+		
+				if((hc<=10'd540)&&(hc>10'd516)&&(vc>=10'd166)&&(vc<10'd191))
+					adrnum2 = hc-516+25*(vc-166);
+				else
+					adrnum2 = 17'd0;
+			
+				if((hc<=10'd515)&&(hc>10'd491)&&(vc>=10'd166)&&(vc<10'd191))
+					adrnum3 = hc-491+25*(vc-166);
+				else
+					adrnum3 = 17'd0;
+			
+				if((hc<=10'd590)&&(hc>10'd566)&&(vc>=10'd166)&&(vc<10'd191))
+					adrnum0 = hc-566+25*(vc-166);
+				else
+					adrnum0 = 17'd0;
+			end
+			2'b10:begin
+				if((hc<=10'd345)&&(hc>10'd321)&&(vc>=10'd347)&&(vc<10'd372))
+					adrnum1 = hc-321+25*(vc-347);
+				else
+					adrnum1 = 17'd0;
+		
+				if((hc<=10'd320)&&(hc>10'd296)&&(vc>=10'd347)&&(vc<10'd372))
+					adrnum2 = hc-296+25*(vc-347);
+				else
+					adrnum2 = 17'd0;
+			
+				if((hc<=10'd295)&&(hc>10'd276)&&(vc>=10'd347)&&(vc<10'd372))
+					adrnum3 = hc-276+25*(vc-347);
+				else
+					adrnum3 = 17'd0;
+			
+				if((hc<=10'd370)&&(hc>10'd346)&&(vc>=10'd347)&&(vc<10'd372))
+					adrnum0 = hc-346+25*(vc-347);
+				else
+					adrnum0 = 17'd0;
+			end
+			default:begin
+				adrnum0 = 17'd0;
+				adrnum1 = 17'd0;
+				adrnum2 = 17'd0;
+				adrnum3 = 17'd0;
+			end
+		endcase
+	end
+	
+	always@(*)begin//score word
+		case(scene)
+			2'b01:begin
+				if((hc<=10'd569)&&(hc>10'd510)&&(vc>=10'd106)&&(vc<10'd134))
+					adrsco = hc-510+59*(vc-106);
+				else
+					adrsco = 17'd0;
+			end
+			2'b10:begin
+				if((hc<=10'd350)&&(hc>10'd291)&&(vc>=10'd286)&&(vc<10'd314))
+					adrsco = hc-291+59*(vc-286);
+				else
+					adrsco = 17'd0;
+			end
+			default:adrsco = 17'd0;
+		endcase	
+	end
+	
 	always@(*)begin
 		adrbg = ((hc>>1)+320*(vc>>1))% 76800;
 	end
@@ -287,17 +370,37 @@ module vga_RGB(input clk_25m, valid,
 				bullet<=Drb;
 			else
 				bullet<=12'd0;
-				
-			background <= Dbg;
 			
-			if(char!=12'd0)
-				{vgaRed,vgaGreen,vgaBlue}<=char;
-			else if(bullet!=12'd0)
-				{vgaRed,vgaGreen,vgaBlue}<=bullet;
-			else if(life_dis!=12'd0)
-				{vgaRed,vgaGreen,vgaBlue}<=life_dis;
-			else//background
-				{vgaRed,vgaGreen,vgaBlue}<=background;
+			case(scene)
+				2'b00:background <= 12'd255;
+				2'b01:background <= Dbg;
+				2'b10:background <= 12'd76800;
+				2'b11:background <= 12'd630;
+				default:background <= 12'd0;
+			endcase
+			
+			case(scene)
+				2'b00:{vgaRed,vgaGreen,vgaBlue}<=background;
+				2'b01:begin
+					if(char!=12'd0)
+						{vgaRed,vgaGreen,vgaBlue}<=char;
+					else if(bullet!=12'd0)
+						{vgaRed,vgaGreen,vgaBlue}<=bullet;
+					else if(life_dis!=12'd0||score_dis!=12'd0)
+						{vgaRed,vgaGreen,vgaBlue}<=life_dis|score_dis;
+					else//background
+						{vgaRed,vgaGreen,vgaBlue}<=background;
+				end
+				2'b10:begin
+					if(score_dis!=12'd0)
+						{vgaRed,vgaGreen,vgaBlue}<=score_dis;
+					else
+						{vgaRed,vgaGreen,vgaBlue}<=background;
+				end
+				2'b11:{vgaRed,vgaGreen,vgaBlue}<=background;
+				default:{vgaRed,vgaGreen,vgaBlue} <= 12'd0;
+			endcase
+			
 		end
 	end
 endmodule

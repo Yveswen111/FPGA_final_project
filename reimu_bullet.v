@@ -22,9 +22,12 @@ module reimu_bullet(
 	input clk_22,
 	input rst,
 	input shoot,
+	input gamestart,
 	output reg [9:0]reimu_bulletx,
 	output reg [9:0]reimu_bullety,
 	output reg reimu_bullet,
+	output reg shot_enm,
+	output reg shot_boss,
 	input reimuE,
 	input [9:0]reimux,
 	input [9:0]reimuy,
@@ -47,7 +50,7 @@ module reimu_bullet(
 	
 	reg [9:0]nt_reimu_bulletx;
 	reg [9:0]nt_reimu_bullety;
-	reg nt_reimu_bullet;
+	reg nt_reimu_bullet, nt_shot_enm, nt_shot_boss;
 
 	reg [6:0]nt_enmhp1;
 	reg [6:0]nt_enmhp2;
@@ -56,7 +59,7 @@ module reimu_bullet(
 	reg [9:0]nt_bosshp;
 
 	always@(posedge clk_22)begin
-		if(rst)begin
+		if(rst||gamestart)begin
 			reimu_bulletx <= reimux;
 			reimu_bullety <= reimuy;
 			reimu_bullet <= 1'b0;
@@ -65,6 +68,8 @@ module reimu_bullet(
 			enmhp2 <= 7'd120;
 			enmhp3 <= 7'd120;
 			enmhp4 <= 7'd120;
+			shot_boss <= 1'b0;
+			shot_enm <= 1'b0;
 		end
 		else begin
 			reimu_bulletx <= nt_reimu_bulletx;
@@ -75,6 +80,8 @@ module reimu_bullet(
 			enmhp2 <= nt_enmhp2;
 			enmhp3 <= nt_enmhp3;
 			enmhp4 <= nt_enmhp4;
+			shot_boss <= nt_shot_boss;
+			shot_enm <= nt_shot_enm;
 		end
 	end
 	
@@ -93,6 +100,8 @@ module reimu_bullet(
 				nt_enmhp2 = enmhp2;
 				nt_enmhp3 = enmhp3;
 				nt_enmhp4 = enmhp4;
+				nt_shot_boss = 1'b1;
+				nt_shot_enm = 1'b0;
 			end
 			else if((reimu_bulletx >= enmx1-14)&&(reimu_bulletx <= enmx1+14)&&(reimu_bullety <= enmy1+14)&&(reimu_bullety >= enmy1-14))begin //hit enm1
 				if(enmhp1 > 7'd0)
@@ -107,6 +116,8 @@ module reimu_bullet(
 				nt_enmhp2 = enmhp2;
 				nt_enmhp3 = enmhp3;
 				nt_enmhp4 = enmhp4;
+				nt_shot_boss = 1'b0;
+				nt_shot_enm = 1'b1;
 			end
 			else if((reimu_bulletx >= enmx2-14)&&(reimu_bulletx <= enmx2+14)&&(reimu_bullety <= enmy2+14)&&(reimu_bullety >= enmy2-14))begin //hit enm2
 				if(enmhp2 > 7'd0)
@@ -121,6 +132,8 @@ module reimu_bullet(
 				nt_enmhp1 = enmhp1;
 				nt_enmhp3 = enmhp3;
 				nt_enmhp4 = enmhp4;
+				nt_shot_boss = 1'b0;
+				nt_shot_enm = 1'b1;
 			end
 			else if((reimu_bulletx >= enmx3-14)&&(reimu_bulletx <= enmx3+14)&&(reimu_bullety <= enmy3+14)&&(reimu_bullety >= enmy3-14))begin //hit enm3
 				if(enmhp3 > 7'd0)
@@ -135,6 +148,8 @@ module reimu_bullet(
 				nt_enmhp2 = enmhp2;
 				nt_enmhp1 = enmhp1;
 				nt_enmhp4 = enmhp4;
+				nt_shot_boss = 1'b0;
+				nt_shot_enm = 1'b1;
 			end
 			else if((reimu_bulletx >= enmx4-14)&&(reimu_bulletx <= enmx4+14)&&(reimu_bullety <= enmy4+14)&&(reimu_bullety >= enmy4-14))begin //hit enm4
 				if(enmhp4 > 7'd0)
@@ -149,6 +164,8 @@ module reimu_bullet(
 				nt_enmhp2 = enmhp2;
 				nt_enmhp3 = enmhp3;
 				nt_enmhp1 = enmhp1;
+				nt_shot_boss = 1'b0;
+				nt_shot_enm = 1'b1;
 			end
 			else if(reimu_bullety<=10'd0)begin //overheaven
 				nt_reimu_bulletx = reimux;
@@ -159,6 +176,8 @@ module reimu_bullet(
 				nt_enmhp2 = enmhp2;
 				nt_enmhp3 = enmhp3;
 				nt_enmhp4 = enmhp4;
+				nt_shot_boss = 1'b0;
+				nt_shot_enm = 1'b0;
 			end
 			else begin
 				nt_reimu_bullet = 1'b1;
@@ -168,6 +187,8 @@ module reimu_bullet(
 				nt_enmhp2 = enmhp2;
 				nt_enmhp3 = enmhp3;
 				nt_enmhp4 = enmhp4;
+				nt_shot_boss = 1'b0;
+				nt_shot_enm = 1'b0;
 				
 				if(reimu_bullety <= 10'd120)
 					nt_reimu_bullety = reimu_bullety-10'd1;
@@ -186,6 +207,8 @@ module reimu_bullet(
 			nt_enmhp2 = enmhp2;
 			nt_enmhp3 = enmhp3;
 			nt_enmhp4 = enmhp4;
+			nt_shot_boss = 1'b0;
+			nt_shot_enm = 1'b0;
 		end
 	end
 

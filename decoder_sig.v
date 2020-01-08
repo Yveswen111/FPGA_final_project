@@ -118,6 +118,7 @@ module decoder_sig(
 		end
 		else begin
 			nt_nums = nums;
+			nt_shoot = shoot;
 		end
 	end
 	
