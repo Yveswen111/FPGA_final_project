@@ -100,17 +100,13 @@ module score(
 
 	always@(*)//score
 	begin
-		if(shot_enm)//shot enemy, socre + 1
-		begin
-			nt_score0 = score0 + 4'b0001;
-		end
-		else if(shot_boss)//shot boss, socre + 2
-		begin
-			nt_score0 = score0 + 4'b0010;
-		end
-		else if(shot_reimu)
+		if(shot_reimu)
 		begin
 		    nt_score0 = 4'b0000;
+		end
+		else if(shot_enm || shot_boss)//shot enemy, socre + 1
+		begin
+			nt_score0 = score0 + 4'b0001;
 		end
 		else if(count0)//進位
 		begin
@@ -138,13 +134,13 @@ module score(
 		    nt_score1 = score1;
 		end
 		
-		if((enmhp1 == 7'd0 && !enm[0]) || (enmhp2 == 7'd0 && !enm[1]) || (enmhp3 == 7'd0 && !enm[2]) || (enmhp4 == 7'd0 && !enm[3]))
+		if(shot_reimu)
+		begin
+		    nt_score2 = 4'b0000;
+		end
+		else if((enmhp1 == 7'd0 && !enm[0]) || (enmhp2 == 7'd0 && !enm[1]) || (enmhp3 == 7'd0 && !enm[2]) || (enmhp4 == 7'd0 && !enm[3]) || count1)
 		begin
 			nt_score2 = score2 + 4'b0001;
-		end
-		else if(count1)
-		begin
-		    nt_score2 = score2 + 4'b0001;
 		end
 		else if(count2)
 		begin
@@ -155,18 +151,17 @@ module score(
 		    nt_score2 = score2;
 		end
 		
-		
-		if(bosshp == 10'd0 && !boss)//boss die, socre + 1000
+		if(shot_reimu)
+		begin
+		    nt_score3 = 4'b0000;
+		end
+		else if((bosshp == 10'd0 && !boss) || count2)//boss die, socre + 1000
 		begin
 			nt_score3 = score3 + 4'b0001;
 		end
-		else if(count2)
-		begin
-		   nt_score3 = score3 + 4'b0001;
-		end
 		else if(count3)
 		begin
-		   nt_score3 = 4'b1001;
+		    nt_score3 = 4'b1001;
 		end
 		else
 		begin
