@@ -18,9 +18,9 @@ module Mux (
 
 	always@(posedge clk)
 	begin
-		if (posedge clk, posedge reset)
-			freq <= 32'd0;
-		else if(scene == 2'b00)
+		if(rst)
+			freq<=32'd0;
+        else if(scene == 2'b00)
 			freq <= freq_start;
 		else if(scene == 2'b01 && !boss)
 			freq <= freq_game;
@@ -31,6 +31,6 @@ module Mux (
 		else if(scene == 2'b11)
 			freq <= freq_lose;
 		else
-			freq <= 10'd0;
+			freq <= 32'd0;
 	end
 endmodule

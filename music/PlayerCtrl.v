@@ -10,9 +10,9 @@ module PlayerCtrl (
 	input reset,
 	output reg [9:0] ibeat
 );
-parameter BEATLEAGTH_START = 10'd768;
-parameter BEATLEAGTH_GAME = 10'd352;
-parameter BEATLEAGTH_BOSS = 10'd133;
+parameter BEATLEAGTH_START = 10'd133;
+parameter BEATLEAGTH_GAME = 10'd768;
+parameter BEATLEAGTH_BOSS = 10'd352;
 parameter BEATLEAGTH_WIN = 10'd297;
 parameter BEATLEAGTH_LOSE = 10'd136;
 reg [9:0] nt_ibeat_start;
@@ -30,10 +30,12 @@ always @(posedge clk, posedge reset) begin
 		ibeat <= 10'd0;
 	else if(scene == 2'b00)
 		ibeat <= nt_ibeat_start;
-	else if(scene == 2'b01 && !boss)
-		ibeat <= nt_ibeat_game;
-	else if(scene == 2'b01 && boss)
-		ibeat <= nt_ibeat_boss;
+	else if(scene == 2'b01)begin
+		if(boss)
+			ibeat <= nt_ibeat_boss;
+		else
+			ibeat <= nt_ibeat_game;
+	end
 	else if(scene == 2'b10)
 		ibeat <= nt_ibeat_win;
 	else if(scene == 2'b11)
@@ -59,7 +61,7 @@ begin
 	end
 	else
 	begin
-		nt_ibeat_start = 10'd0;
+		nt_ibeat_game = 10'd0;
 	end
 	
 	if(ibeat < BEATLEAGTH_BOSS && scene == 2'b01 && boss)
